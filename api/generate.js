@@ -6,7 +6,8 @@ import { RULES } from './_rules.js';
 export const config = { runtime: 'edge' };
 
 const MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-5-5';
-const MAX_TOKENS = 8000;
+// 이 모델은 답하기 전에 '생각'을 하고, 생각에 쓴 분량도 이 한도에 포함된다. 대본이 나올 자리까지 남도록 넉넉히 둔다.
+const MAX_TOKENS = 16000;
 const MAX_IDEA = 4000;
 
 const json = (status, code, extra) => new Response(JSON.stringify(Object.assign({ code }, extra || {})), {
@@ -65,7 +66,10 @@ export default async function handler(request) {
       method: 'POST',
       signal: ac.signal,
       headers: { 'content-type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: MODEL, max_tokens: MAX_TOKENS, stream: true, system: RULES, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify(Object.assign(
+        { model: MODEL, max_tokens: MAX_TOKENS, stream: true, system: RULES, messages: [{ role: 'user', content: prompt }] },
+        env.CLAUDE_THINKING ? { thinking: { type: env.CLAUDE_THINKING } } : {}
+      ))
     });
   } catch (e) { return json(502, 'upstream_error', { detail: 'Claude에 연결하지 못했어요: ' + String((e && e.message) || e).slice(0, 120) }); }
   if (!ar.ok) {
@@ -81,12 +85,14 @@ export default async function handler(request) {
   const stream = new ReadableStream({
     async start(controller) {
       const out = o => controller.enqueue(enc.encode(JSON.stringify(o) + '\n'));
-      let buf = '', total = 0, stop = '', failed = '';
+      let buf = '', total = 0, stop = '', failed = '', thought = 0;
       const handle = line => {
         if (!line.startsWith('data:')) return;
         let d; try { d = JSON.parse(line.slice(5).trim()); } catch (e) { return; }
         if (d.type === 'content_block_delta' && d.delta && d.delta.type === 'text_delta' && d.delta.text) {
           total += d.delta.text.length; out({ t: 'd', x: d.delta.text });
+        } else if (d.type === 'content_block_delta' && d.delta && d.delta.type === 'thinking_delta') {
+          if (thought++ % 20 === 0) out({ t: 'k' });
         } else if (d.type === 'message_delta' && d.delta && d.delta.stop_reason) {
           stop = d.delta.stop_reason;
         } else if (d.type === 'error') {
@@ -110,7 +116,7 @@ export default async function handler(request) {
       }
       if (failed) out({ t: 'e', code: failed });
       else if (stop === 'refusal') out({ t: 'e', code: 'refused' });
-      else if (!total) out({ t: 'e', code: 'empty_completion' });
+      else if (!total) out({ t: 'e', code: stop === 'max_tokens' ? 'thinking_exhausted' : 'empty_completion', detail: '종료 사유: ' + (stop || '없음') + ', 생각 조각 ' + thought + '개' });
       else out({ t: 'done', truncated: stop === 'max_tokens' });
       controller.close();
     },
