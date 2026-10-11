@@ -1079,13 +1079,14 @@ function genErrText(e){
     rate_limited:'요청이 많거나 사용 한도에 닿았어요. 잠시 뒤 다시 눌러 주세요.',
     session_expired:'로그인이 만료됐어요. 다시 로그인해 주세요.',
     refused:'이 요청으로는 대본을 만들 수 없었어요. 내용을 바꿔서 다시 시도해 주세요.',
-    empty_completion:'답이 비어 있었어요. 요청을 조금 더 구체적으로 적어 주세요.',
+    empty_completion:'Claude가 글을 내보내지 못했어요. 다시 눌러 주세요.',
     prompt_too_large:'요청이 너무 길어요. 줄여서 다시 시도해 주세요.',
     cancelled:'중단했어요.',
     network:'네트워크가 끊겨서 중단됐어요.',
     server_misconfigured:'서버 설정이 아직 끝나지 않았어요. 안내서의 환경 변수를 확인해 주세요.',
     forbidden:'이 계정은 대본 만들기를 쓸 수 없어요.',
-    empty_request:'만들고 싶은 이야기를 먼저 적어 주세요.'
+    empty_request:'만들고 싶은 이야기를 먼저 적어 주세요.',
+    thinking_exhausted:'Claude가 생각하는 데 길이를 다 써서 대본이 비었어요. 다시 눌러 주세요.'
   };
   return map[code] || '대본 만들기에 실패했어요. 잠시 뒤 다시 눌러 주세요.';
 }
@@ -1380,7 +1381,7 @@ function makeSample(){
           const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1); if (!line) continue;
           let m; try { m = JSON.parse(line); } catch(e){ continue; }
           if (m.t === 'd'){ text += m.x; if (opts.onText) opts.onText({text}); }
-          else if (m.t === 'e'){ throw {code: m.code, text}; }
+          else if (m.t === 'e'){ throw {code: m.code, text, detail: m.detail || ''}; }
           else if (m.t === 'done'){ truncated = !!m.truncated; }
         }
       }
@@ -1389,7 +1390,7 @@ function makeSample(){
       if (e && e.code) throw e;
       throw {code: 'network', text};
     }
-    if (!text.trim()) throw {code: 'empty_completion'};
+    if (!text.trim()) throw {code: 'empty_completion', detail: '받은 글자가 없어요.'};
     return {text, truncated};
   };
 }
