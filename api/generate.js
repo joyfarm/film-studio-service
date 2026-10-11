@@ -6,11 +6,11 @@ const MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-5-5';
 const MAX_TOKENS = 8000;
 const MAX_IDEA = 4000;
 
-const fail = (res, status, code) => {
+const fail = (res, status, code, extra) => {
   res.statusCode = status;
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store');
-  res.end(JSON.stringify({ code }));
+  res.end(JSON.stringify(Object.assign({ code }, extra || {})));
 };
 const oneLine = (v, max) => String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, max);
 
@@ -26,7 +26,8 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return fail(res, 405, 'method_not_allowed');
 
   const { SUPABASE_URL, SUPABASE_ANON_KEY, ANTHROPIC_API_KEY, ALLOWED_EMAILS } = process.env;
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !ANTHROPIC_API_KEY) return fail(res, 500, 'server_misconfigured');
+  const missing = ['SUPABASE_URL', 'SUPABASE_ANON_KEY', 'ANTHROPIC_API_KEY'].filter(k => !process.env[k]);
+  if (missing.length) return fail(res, 500, 'server_misconfigured', { detail: '없는 환경 변수: ' + missing.join(', ') });
 
   // 1) 로그인한 사용자인지 확인 (Supabase가 토큰을 검증한다)
   const m = /^Bearer (.+)$/.exec(req.headers.authorization || '');
@@ -38,7 +39,7 @@ module.exports = async (req, res) => {
     });
     if (!ur.ok) return fail(res, 401, 'session_expired');
     user = await ur.json();
-  } catch (e) { return fail(res, 502, 'upstream_error'); }
+  } catch (e) { return fail(res, 502, 'upstream_error', { detail: 'Supabase에 연결하지 못했어요: ' + String((e && e.message) || e).slice(0, 120) }); }
   if (!user || !user.id) return fail(res, 401, 'session_expired');
   if (ALLOWED_EMAILS) {
     const ok = ALLOWED_EMAILS.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
@@ -65,11 +66,13 @@ module.exports = async (req, res) => {
       headers: { 'content-type': 'application/json', 'x-api-key': ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
       body: JSON.stringify({ model: MODEL, max_tokens: MAX_TOKENS, stream: true, system: RULES, messages: [{ role: 'user', content: prompt }] })
     });
-  } catch (e) { return fail(res, 502, 'upstream_error'); }
+  } catch (e) { return fail(res, 502, 'upstream_error', { detail: 'Claude에 연결하지 못했어요: ' + String((e && e.message) || e).slice(0, 120) }); }
   if (!ar.ok) {
     const code = ar.status === 429 || ar.status === 529 ? 'rate_limited' : ar.status === 413 ? 'prompt_too_large'
       : ar.status === 401 || ar.status === 403 ? 'server_misconfigured' : 'upstream_error';
-    return fail(res, 502, code);
+    let msg = '';
+    try { const j = await ar.json(); msg = (j && j.error && j.error.message) || ''; } catch (e) {}
+    return fail(res, 502, code, { detail: 'Claude API ' + ar.status + (msg ? ': ' + String(msg).slice(0, 200) : '') });
   }
 
   // 4) 결과를 한 줄씩 흘려 보낸다: {"t":"d","x":"글자"} … {"t":"done","truncated":false}
@@ -108,4 +111,3 @@ module.exports = async (req, res) => {
   else out({ t: 'done', truncated: stop === 'max_tokens' });
   res.end();
 };
-
