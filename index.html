@@ -1,0 +1,1412 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>영화대본 스튜디오</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap">
+<style>[hidden]{display:none!important}img{max-width:100%}
+/* K-Modern 디자인 시스템: Pretendard, 슬레이트 잉크, 코랄 포인트(#FF385C), 16px 카드, 알약형 탭·칩. 화면의 대부분은 흰 바탕과 회색 계열로 두고 포인트색은 아껴 쓴다. */
+:root{
+  --font-ui:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Helvetica Neue','Segoe UI','Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+  --font-display:var(--font-ui);
+  --font-script:'Nanum Gothic Coding','JetBrains Mono','D2Coding',ui-monospace,Menlo,Consolas,monospace;
+  --bg:#FFFFFF; --surface:#F9FAFB; --paper:#FFFFFF; --hover:#F2F4F6;
+  --ink:#191F28; --ink-2:#333D4B; --ink-3:#6B7684; --ink-4:#8B95A1;
+  --line:#E5E8EB; --line-2:#F2F4F6; --line-strong:#D1D6DB;
+  --accent:#FF385C; --accent-btn:#E01542; --accent-btn-hover:#C40D36; --accent-text:#C40D36; --accent-ink:#FFFFFF; --accent-soft:#FFF0F3;
+  --tally:#F04452; --ok:#04784A; --ok-soft:#E6F7EF; --warn:#A35200; --warn-soft:#FFF4E5;
+  --screen-bg:#111418; --screen-fg:#F9FAFB; --screen-dim:#8B95A1;
+  --r-xs:6px; --r-sm:10px; --r-md:16px; --r-lg:24px;
+  --sh-card:0 10px 24px -4px rgba(25,31,40,.08),0 2px 6px -1px rgba(25,31,40,.04);
+  --sh-panel:0 6px 20px rgba(0,0,0,.08),0 0 0 1px #E5E8EB;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0F1217; --surface:#161A21; --paper:#1A1F27; --hover:#212732;
+    --ink:#F2F4F6; --ink-2:#C9CFD6; --ink-3:#9AA4B0; --ink-4:#7B8592;
+    --line:#2A303A; --line-2:#222831; --line-strong:#3A424F;
+    --accent:#FF5A78; --accent-btn:#E01542; --accent-btn-hover:#F0295A; --accent-text:#FF8CA0; --accent-soft:#3A1822;
+    --tally:#FF6B77; --ok:#4FD99B; --ok-soft:#10301F; --warn:#FFB454; --warn-soft:#3A2A10;
+    --sh-card:0 10px 24px -4px rgba(0,0,0,.5),0 2px 6px -1px rgba(0,0,0,.3);
+    --sh-panel:0 6px 20px rgba(0,0,0,.4),0 0 0 1px #2A303A;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.55;letter-spacing:-.01em;word-break:keep-all;overflow-wrap:break-word;padding-inline:max(16px,2.4vw);padding-block:12px 56px}
+#app{max-width:1280px;margin-inline:auto}
+button{font:inherit;color:inherit;cursor:pointer;letter-spacing:inherit}
+input,select,textarea{font:inherit;letter-spacing:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:8px 12px;min-width:0;max-width:100%}
+input::placeholder,textarea::placeholder{color:var(--ink-4)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
+h3{font-size:17px;letter-spacing:-.01em}
+p{margin:0}
+.muted{color:var(--ink-3);font-size:13.5px;line-height:1.5}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.grow{flex:1 1 0;min-width:0}
+
+/* 상단 */
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-block:14px 14px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:10px;flex:1 1 280px;min-width:0}
+.rec{flex:none;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px var(--accent-soft)}
+#film-title{font-size:clamp(20px,3vw,26px);font-weight:700;letter-spacing:-.025em;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;padding:2px 2px;width:100%}
+#film-title:hover{border-bottom-color:var(--line-strong)}
+#film-title:focus-visible{outline:none;border-bottom-color:var(--accent)}
+.status{font-size:12px;font-weight:500;color:var(--ink-3);padding:5px 12px;border:1px solid var(--line);border-radius:9999px;background:var(--surface);white-space:nowrap}
+.status.ok{color:var(--ok)}
+.status.busy{color:var(--warn)}
+.status.err{color:var(--tally);border-color:var(--tally)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.tab{background:var(--paper);border:1px solid var(--line-strong);border-radius:9999px;padding:8px 16px;font-size:14px;font-weight:600;color:var(--ink-2)}
+.tab:hover{background:var(--hover)}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.tab small{margin-left:6px;font-weight:500;opacity:.7}
+.banner{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:var(--warn-soft);color:var(--warn);border-radius:var(--r-sm);padding:12px 16px;margin-bottom:16px;font-size:13.5px}
+
+/* 버튼 */
+.btn{border:1px solid var(--line-strong);background:var(--paper);border-radius:var(--r-sm);padding:8px 14px;font-size:14px;font-weight:600;color:var(--ink)}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--accent-btn);color:var(--accent-ink);border-color:var(--accent-btn)}
+.btn.primary:hover{background:var(--accent-btn-hover);border-color:var(--accent-btn-hover)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--ink-2)}
+.btn.ghost:hover{background:var(--hover)}
+.btn.armed{background:var(--tally);border-color:var(--tally);color:#fff}
+.btn.sm{padding:5px 12px;font-size:13px}
+.btn.lg{height:52px;width:100%;font-size:16px;border-radius:12px}
+.ico{border:1px solid transparent;background:transparent;border-radius:var(--r-xs);width:30px;height:30px;display:inline-grid;place-items:center;color:var(--ink-3);font-size:14px;padding:0}
+.ico:hover{background:var(--hover);color:var(--ink)}
+.ico.armed{background:var(--tally);color:#fff;border-color:var(--tally);width:auto;padding-inline:10px;font-size:12px}
+.btn[disabled],.ico[disabled]{opacity:.4;cursor:default}
+
+/* 카드 */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:18px 20px}
+.card+.card{margin-top:12px}
+.card h3{margin-bottom:10px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.pill{display:inline-block;font-size:12px;font-weight:500;padding:2px 10px;border-radius:9999px;background:var(--accent-soft);color:var(--accent-text)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.msg{font-size:13px;color:var(--tally);min-height:1em}
+
+/* 대본 */
+.script-grid{display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px;align-items:start}
+.side{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px}
+.side .card+.card{margin-top:0}
+.worklines{display:flex;flex-direction:column;gap:6px;font-size:13.5px;margin-bottom:12px}
+.btnrow{display:flex;flex-wrap:wrap;gap:6px}
+.scene-nav{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:2px;max-height:46vh;overflow:auto}
+.sn{width:100%;text-align:left;border:1px solid transparent;background:transparent;border-radius:var(--r-sm);padding:8px 10px;display:flex;gap:8px;align-items:baseline}
+.sn:hover{background:var(--hover)}
+.sn.on{background:var(--paper);border-color:var(--line-strong);box-shadow:inset 3px 0 0 var(--accent)}
+.sn-no{font-family:var(--font-script);font-size:12.5px;color:var(--ink-3);flex:none}
+.sn-name{min-width:0;overflow-wrap:anywhere;font-size:14px}
+.paper{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:22px clamp(14px,2.6vw,36px) 26px;box-shadow:var(--sh-card)}
+.slug{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line-strong)}
+.slug-no{font-family:var(--font-script);font-weight:700;font-size:16px}
+.slug input{font-family:var(--font-script);font-weight:700;border-color:transparent;background:transparent}
+.slug input:hover{border-color:var(--line-strong)}
+.in-place{flex:1 1 160px}
+.in-time{width:110px}
+.in-range{width:120px;font-weight:400!important;color:var(--ink-3)}
+.slug .tools{margin-left:auto;display:flex}
+.blk{display:grid;grid-template-columns:76px minmax(0,1fr);gap:4px 14px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.blk-side{font-size:12px;font-weight:500;color:var(--ink-3);padding-top:8px;display:flex;align-items:flex-start;gap:6px}
+.blk-side i{flex:none;width:8px;height:8px;border-radius:50%;margin-top:5px;background:var(--bt,var(--ink-3))}
+.blk-main{min-width:0}
+.blk-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:2px}
+.blk-meta .who{width:110px;font-family:var(--font-script);font-weight:700}
+.blk-meta .paren{flex:1 1 120px;font-family:var(--font-script);font-style:italic;color:var(--ink-2)}
+.actor{font-size:12px;font-weight:500;color:var(--ok);background:var(--ok-soft);border-radius:9999px;padding:2px 10px;white-space:nowrap}
+.actor.none{color:var(--warn);background:var(--warn-soft)}
+.blk-tools{margin-left:auto;display:flex;opacity:.4}
+.blk:hover .blk-tools,.blk:focus-within .blk-tools{opacity:1}
+.blk-text{display:block;width:100%;resize:none;overflow:hidden;border:1px solid transparent;background:transparent;font-family:var(--font-script);font-size:14.5px;line-height:1.8;padding:4px 6px;border-radius:var(--r-xs);word-break:normal;overflow-wrap:anywhere}
+.blk-text:hover{border-color:var(--line-strong)}
+.t-action .blk-text{font-style:italic;color:var(--ink-2)}
+.t-narration .blk-text,.t-caption .blk-text{color:var(--warn)}
+.t-sfx .blk-text,.t-music .blk-text{color:var(--ink-2)}
+.t-action{--bt:var(--ink-4)}.t-dialogue{--bt:var(--accent)}.t-narration{--bt:var(--warn)}.t-caption{--bt:var(--ok)}.t-sfx{--bt:var(--tally)}.t-music{--bt:var(--tally)}
+.addbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-top:16px}
+.addbar span{font-size:12.5px;color:var(--ink-3);margin-right:4px}
+.panel{margin-bottom:12px}
+.panel textarea.mono,.panel textarea.out{width:100%;font-family:var(--font-script);font-size:13px;line-height:1.6;margin-block:8px;word-break:normal}
+.vlist{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.vitem{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper)}
+.vitem b{font-family:var(--font-script)}
+.vitem .vnote{flex:1 1 160px;min-width:0;overflow-wrap:anywhere}
+.empty{background:var(--surface);border:1px dashed var(--line-strong);border-radius:var(--r-md);padding:32px clamp(16px,3vw,36px)}
+.empty h2{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.empty .row{margin-top:16px}
+
+/* 사람과 역할 */
+.two{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+.addperson{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:end}
+.addperson label,.field label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:500;color:var(--ink-3)}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:18px 20px}
+.person-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.5fr) auto;gap:8px;align-items:end}
+.person-head .nm{font-weight:600;font-size:16px}
+.rlist{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.rchip{display:inline-flex;align-items:center;gap:2px;border:1px solid var(--line-strong);border-radius:9999px;padding:2px 4px 2px 12px;background:var(--paper);font-size:13.5px}
+.rchip .g{font-size:12px;font-weight:600;color:var(--ink-3);margin-right:6px}
+.rchip.g-cast .g{color:var(--accent-text)}
+.rchip .ico{width:24px;height:24px;font-size:12px}
+.norole{font-size:13px;color:var(--warn);background:var(--warn-soft);padding:3px 12px;border-radius:9999px}
+.addrole{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.addrole .r-char{width:150px}
+.addrole .r-label{width:150px}
+.people{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.charlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+.charlist li{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.charlist b{font-family:var(--font-script)}
+
+/* 스토리보드 */
+.bar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-bottom:16px}
+.bsec{margin-top:28px}
+.bsec-h{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:14px}
+.bsec-h b{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.bsec-h .gist{color:var(--ink-3);font-size:13.5px;flex:1 1 200px;min-width:0;overflow-wrap:anywhere}
+.cuts{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.cut{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:box-shadow .2s}
+.cut:hover,.cut:focus-within{box-shadow:var(--sh-card)}
+.frame{position:relative;aspect-ratio:16/9;max-width:100%;background:var(--hover);display:grid;place-items:center}
+.frame img{width:100%;height:100%;object-fit:cover;display:block}
+.frame .ph{font-size:12.5px;color:var(--ink-4)}
+.cut-no{position:absolute;left:10px;top:10px;background:rgba(255,255,255,.95);color:#191F28;font-size:12px;font-weight:600;padding:3px 10px;border-radius:9999px;z-index:1;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.frame .imgtools{position:absolute;right:8px;bottom:8px;display:flex;gap:6px;z-index:1}
+.imgbtn{position:relative;display:inline-block;background:rgba(255,255,255,.95);color:#191F28;border:1px solid rgba(0,0,0,.08);border-radius:9999px;padding:4px 12px;font-size:12.5px;font-weight:600;cursor:pointer}
+.imgbtn:hover{background:#fff}
+.imgbtn:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.imgbtn input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.cut-body{padding:12px 14px 10px;display:flex;flex-direction:column;gap:8px}
+.cut-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.cut-row select{flex:1 1 90px;font-size:13px;padding:6px 8px}
+.cut-row .sec{width:64px;font-size:13px;padding:6px 8px}
+.cut-row label{font-size:12.5px;color:var(--ink-3);display:flex;gap:4px;align-items:center}
+.cut-desc{width:100%;resize:none;overflow:hidden;font-size:14px;line-height:1.6;min-height:3.4em}
+.cut-tools{display:flex;justify-content:flex-end}
+
+/* 크레딧 */
+.credits-grid{display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px;align-items:start}
+.opt{display:flex;flex-direction:column;gap:12px;font-size:14px}
+.opt label{display:flex;gap:8px;align-items:center}
+.screen{background:var(--screen-bg);color:var(--screen-fg);border-radius:var(--r-lg);height:min(74vh,760px);overflow-y:auto;padding:56px clamp(16px,6vw,72px) 96px;scrollbar-width:thin}
+.cr-spacer{height:0}
+.screen.playing .cr-spacer{height:min(70vh,560px)}
+.cr-title{font-size:clamp(28px,5vw,44px);font-weight:700;letter-spacing:-.03em;line-height:1.25;text-wrap:balance}
+.cr-sub{color:var(--screen-dim);font-size:14px;margin-top:8px;max-width:46ch}
+.cr-group{margin-top:48px;padding-top:16px;border-top:1px solid color-mix(in srgb,var(--screen-fg) 18%,transparent)}
+.cr-group>h2{font-size:13px;font-weight:600;letter-spacing:.3em;color:var(--screen-dim);margin-bottom:14px}
+.cr-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:6px 30px;margin-block:20px}
+.cr-label{text-align:right;color:var(--screen-dim);letter-spacing:.14em;font-size:13px;padding-top:6px;overflow-wrap:anywhere}
+.cr-entries{display:flex;flex-direction:column;gap:12px;min-width:0}
+.cr-name{font-size:clamp(18px,2.6vw,22px);font-weight:700;letter-spacing:-.02em;overflow-wrap:anywhere}
+.cr-char{font-size:14px;color:var(--screen-dim);margin-left:8px;font-weight:400}
+.cr-meta{font-size:13px;color:var(--screen-dim);overflow-wrap:anywhere}
+.cr-quote{font-size:14.5px;color:var(--screen-fg);opacity:.8;margin-top:2px;overflow-wrap:anywhere}
+.cr-end{margin-top:64px;color:var(--screen-dim);font-size:13.5px}
+.cr-empty{color:var(--screen-dim);padding-block:40px;max-width:40ch}
+.cover{display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.link{background:none;border:0;padding:0;color:var(--accent-text);text-decoration:underline;font-size:inherit}
+
+/* 대본 만들기 */
+.gen-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px;align-items:start}
+.gen-grid .card+.card{margin-top:0}
+#gen-idea{width:100%;min-height:10em;resize:vertical;line-height:1.7;margin-top:8px}
+.gen-out{width:100%;min-height:26em;resize:vertical;font-family:var(--font-script);font-size:13px;line-height:1.7;margin-block:8px;word-break:normal}
+.opts{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.opts label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:500;color:var(--ink-3)}
+.examples{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.examples span{font-size:12.5px;color:var(--ink-3)}
+.examples .btn{border-radius:9999px}
+.gen-sum{font-size:13.5px;min-height:1.5em}
+.hdr-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:12.5px;color:var(--ink-3)}
+
+/* 로그인 */
+.auth{min-height:80vh;display:grid;place-items:center;padding-block:24px}
+.auth-card{width:100%;max-width:400px;background:var(--paper);border-radius:var(--r-lg);box-shadow:var(--sh-panel);padding:32px 28px}
+.auth-logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;margin-bottom:24px}
+.auth-card h1{font-size:26px;font-weight:700;letter-spacing:-.025em;margin-bottom:6px}
+.auth-card form{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+.auth-card label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+.auth-card input{height:48px;font-size:16px;font-weight:400}
+.auth-card .msg{min-height:1.4em}
+.auth-card code{font-family:var(--font-script);font-size:13px;background:var(--hover);padding:1px 6px;border-radius:var(--r-xs)}
+
+@media (max-width:860px){
+  .script-grid,.two,.credits-grid,.gen-grid{grid-template-columns:minmax(0,1fr)}
+  .side{position:static}
+  .scene-nav{flex-direction:row;flex-wrap:wrap;max-height:none}
+  .sn{width:auto;border-color:var(--line)}
+  .person-head{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .person-head .quote{grid-column:1/-1}
+  .addperson{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .addperson .quote{grid-column:1/-1}
+}
+@media (max-width:560px){
+  .blk{grid-template-columns:minmax(0,1fr)}
+  .blk-side{padding-top:0}
+  .blk-side i{margin-top:6px}
+  .cr-row{grid-template-columns:minmax(0,1fr);gap:2px}
+  .cr-label{text-align:left;padding-top:0}
+  .screen{padding-top:36px}
+  .auth-card{padding:28px 20px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<div id="app" aria-live="off"></div>
+
+<script>
+/* ================= 상수 ================= */
+const LS_KEY = 'filmstudio.v1';
+const BLOCK_TYPES = {action:'지문', dialogue:'대사', narration:'내레이션', caption:'자막', sfx:'효과음', music:'음악'};
+const SHOTS = ['풀샷','미디엄샷','클로즈업','익스트림 클로즈업','오버 더 숄더','투샷','인서트','하이앵글','로우앵글','버드아이'];
+const MOVES = ['고정','팬','틸트','돌리 인','돌리 아웃','트래킹','핸드헬드','줌'];
+const TIMES = ['아침','낮','오후','저녁','밤','새벽'];
+const GROUP_LABEL = {cast:'출연', crew:'제작'};
+const KINDS = {
+  cast:[['lead','주연'],['support','조연'],['special','특별 출연'],['voice','목소리 출연'],['extra','단역']],
+  crew:[['director','감독'],['writer','각본'],['producer','프로듀서'],['dp','촬영'],['light','조명'],['sound','음향·녹음'],['edit','편집'],['music','음악'],['art','미술·소품'],['costume','의상·분장'],['assist','연출부'],['thanks','도움 주신 분'],['other','기타 (직접 입력)']]
+};
+const CRED_SPEED = 42; // px/s
+
+/* ================= 유틸 ================= */
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Math.random().toString(36).slice(2, 10);
+const clone = o => JSON.parse(JSON.stringify(o));
+const pad = n => String(n).padStart(2, '0');
+const nowLabel = () => { const d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+const dateLabel = iso => { try { const d = new Date(iso); return (d.getMonth()+1) + '/' + d.getDate() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); } catch(e){ return ''; } };
+const fmtSec = s => Math.floor(s/60) + ':' + pad(Math.round(s%60));
+
+/* ================= 대본 파서 (/edu-video-script 출력 형식) ================= */
+/*PARSER-START*/
+function blk(type, o){ return Object.assign({id: uid(), type, who:'', paren:'', text:''}, o); }
+function parseScript(raw){
+  const lines = String(raw).replace(/\r/g,'').split('\n');
+  const out = {title:'', logline:'', spec:'', lesson:'', characters:[], memo:'', scenes:[]};
+  let sec = 'head', cur = null; const memo = [];
+  for (const line of lines){
+    const t = line.trim();
+    if (!t) continue;
+    let m;
+    if (/^```/.test(t)) continue;
+    if ((m = t.match(/^#\s+(.+)$/))) { out.title = m[1].trim(); continue; }
+    if (/^##\s*등장인물/.test(t)) { sec = 'chars'; continue; }
+    if (/^##\s*대본/.test(t)) { sec = 'script'; continue; }
+    if (/^##\s*제작\s*메모/.test(t)) { sec = 'memo'; continue; }
+    if (/^##/.test(t)) { sec = 'other'; continue; }
+    if (sec === 'head') {
+      if ((m = t.match(/^-\s*로그라인\s*:\s*(.*)$/))) out.logline = m[1];
+      else if ((m = t.match(/^-\s*교훈\s*:\s*(.*)$/))) out.lesson = m[1];
+      else if ((m = t.match(/^-\s*대상\s*\/\s*길이\s*\/\s*형식\s*:\s*(.*)$/))) out.spec = m[1];
+      continue;
+    }
+    if (sec === 'chars') {
+      if ((m = t.match(/^-\s*(.+?)(?:\((.*?)\))?\s*:\s*(.*)$/))) out.characters.push({name:m[1].trim(), age:(m[2]||'').trim(), desc:m[3].trim()});
+      continue;
+    }
+    if (sec === 'memo') { memo.push(t.replace(/^-\s*/, '')); continue; }
+    if (sec !== 'script') continue;
+    if ((m = t.match(/^S#\s*\d+\s*[.．:]?\s*(.*)$/i))) {
+      let rest = m[1], range = '', time = '';
+      const r = rest.match(/\[([^\]]*)\]\s*$/);
+      if (r) { range = r[1].trim(); rest = rest.slice(0, r.index).trim(); }
+      const tm = rest.match(/\(([^)]*)\)\s*$/);
+      if (tm) { time = tm[1].trim(); rest = rest.slice(0, tm.index).trim(); }
+      cur = {id: uid(), place: rest, time, range, blocks: []};
+      out.scenes.push(cur);
+      continue;
+    }
+    if (!cur) continue;
+    if (/^\(.*\)$/.test(t)) { cur.blocks.push(blk('action', {text: t.slice(1, -1).trim()})); continue; }
+    if ((m = t.match(/^(N|자막|E|M)\s*[:：]\s*(.*)$/))) {
+      const type = {N:'narration', '자막':'caption', E:'sfx', M:'music'}[m[1]];
+      cur.blocks.push(blk(type, {text: m[2]}));
+      continue;
+    }
+    if ((m = t.match(/^([^:：()]{1,20}?)\s*[:：]\s*(.*)$/))) {
+      let text = m[2], paren = '';
+      const p = text.match(/^\(([^)]*)\)\s*(.*)$/);
+      if (p) { paren = p[1]; text = p[2]; }
+      cur.blocks.push(blk('dialogue', {who: m[1].trim(), paren, text}));
+      continue;
+    }
+    cur.blocks.push(blk('action', {text: t.replace(/^\(/, '').replace(/\)$/, '')}));
+  }
+  out.memo = memo.join('\n');
+  return out;
+}
+/*PARSER-END*/
+
+/* ================= 상태 ================= */
+function defMeta(){
+  return {title:'', logline:'', genre:'', lesson:'', spec:'', memo:'', characters:[], people:[], roles:[],
+    credits:{order:'cast-first', org:true, quote:true}, sample:false};
+}
+let S = { meta: defMeta(), script: {scenes:[], base:0}, board: {cuts:[]}, versions: [] };
+const ui = { auth:'checking', authMsg:'', loadErr:'', tab:'script', sceneId:null, loaded:false, storage:'pending', status:['불러오는 중…','busy'], panel:'', exportText:'', playing:false, focus:'', boardMsg:'', persistedSample:false,
+  gen:{idea:'', len:'', aud:'', out:'', busy:false, msg:'', blocked:false} };
+const Store = { db:null, assets:null, downloads:null, sample:null };
+
+try { const t = localStorage.getItem('filmstudio.tab'); if (t) ui.tab = t; } catch(e){}
+try { const d = JSON.parse(localStorage.getItem('filmstudio.gen') || 'null'); if (d) Object.assign(ui.gen, {idea:d.idea || '', len:d.len || '', aud:d.aud || '', out:d.out || ''}); } catch(e){}
+
+/* ================= 예시 프로젝트 ================= */
+const EXAMPLE = `# 뭐든지 박사 도윤
+
+- 로그라인: 뭐든 아는 척하던 도윤이 엉터리 설명 때문에 과학 발표를 떠맡고, 처음으로 "몰랐어요"라고 말하게 된다.
+- 대상 / 길이 / 형식: 초등 3~6학년 / 3분 / 실사 단편 드라마
+- 교훈: 모른다고 말하는 용기가 배움의 시작이다.
+
+## 등장인물
+- 도윤(11): 자신만만한 아는 척 대장. 모른다는 말을 못 한다. 말버릇 "그건 말이지~"
+- 하린(11): 궁금한 건 못 참는 짝꿍. 도윤의 말을 전부 믿는다.
+- 선생님(30대): 유쾌하고 눈치가 빠르다.
+
+## 대본
+
+S#1. 교실 (아침)  [0:00~0:30]
+
+(하린이 과학책을 넘기다 고개를 갸웃한다. 옆자리 도윤은 의자를 뒤로 젖히고 앉아 있다.)
+
+하린: 도윤아, 광합성이 뭐야?
+
+(도윤, 잠깐 얼어붙는다. 곧 자신만만한 표정.)
+
+도윤: 그건 말이지~ 빛 광, 합칠 합. 빛으로 사진을 합성하는 거야. 식물이 셀카 찍는 거지.
+하린: 우와, 식물도 셀카를 찍어?
+도윤: 그럼. 해바라기가 괜히 해를 보겠어? 조명 때문이야.
+
+자막: 물론, 사실이 아닙니다.
+E: 띠용
+
+S#2. 교실 (수업 시간)  [0:30~1:00]
+
+선생님: 내일 과학 발표 주제는 광합성! 누가 해 볼까?
+
+(하린이 손을 번쩍 든다.)
+
+하린: 도윤이요! 도윤이 완전 박사예요!
+
+(아이들 박수. 도윤, 웃고 있지만 이마에 땀이 맺힌다.)
+
+도윤: 하하... 그건 말이지...
+선생님: 좋아, 도윤이로 결정!
+N: (도윤의 속마음) 큰일 났다.
+
+S#3. 도윤의 방 (밤)  [1:00~1:40]
+
+(책상 위에 과학책이 펼쳐져 있다. 도윤이 손가락으로 짚으며 읽는다.)
+
+도윤: 식물이 빛과 물, 이산화 탄소로 양분을 만드는 것...
+
+(책을 탁 덮는다.)
+
+도윤: 셀카가 아니잖아!
+
+(침대에 얼굴을 묻는다. 휴대폰이 울린다.)
+
+자막: [하린] 내일 발표 기대돼! 식물 셀카 얘기 꼭 해 줘!
+
+도윤: 그냥 아픈 척할까... 아니야. 그럼 거짓말이 두 개가 되잖아.
+
+(거울 앞에 선다.)
+
+도윤: 저는... 몰랐습니다. 으, 어렵다.
+
+S#4. 교실 (다음 날)  [1:40~2:35]
+
+(도윤이 교실 앞에 선다. 발표 종이를 든 손이 떨린다. 맨 앞줄에서 하린이 눈을 반짝인다.)
+
+도윤: 광합성은 말이지...
+
+(멈춘다. 숨을 크게 들이쉰다.)
+
+도윤: 사실 저, 어제까지 광합성이 뭔지 몰랐어요. 하린이한테는 식물이 셀카 찍는 거라고 했어요.
+
+(교실이 조용해진다.)
+
+하린: ...셀카 아니야?
+
+(아이들 웃음이 터진다.)
+
+도윤: 모른다고 하면 창피할 것 같아서 아는 척했어요. 그래서 어젯밤에 진짜로 찾아봤어요.
+
+(종이를 편다.)
+
+도윤: 광합성은 식물이 햇빛과 물, 이산화 탄소로 스스로 양분을 만드는 일이에요. 그때 우리가 마시는 산소도 나와요.
+선생님: 도윤이가 오늘 어려운 걸 두 가지나 했네. 광합성 설명, 그리고 "몰랐어요"라고 말하기.
+
+(박수. 도윤의 어깨가 내려간다.)
+
+M: 밝고 경쾌한 음악 시작
+
+S#5. 복도 (쉬는 시간)  [2:35~3:00]
+
+하린: 근데 도윤아, 블랙홀은 뭐야?
+
+(도윤, 입을 열다 멈춘다. 씩 웃는다.)
+
+도윤: 그건 말이지~ 몰라. 같이 찾아볼래?
+
+(둘이 도서관 쪽으로 뛰어간다.)
+
+자막: 모른다고 말하는 순간, 배움이 시작된다.
+
+## 제작 메모
+- 예상 길이 3분, 대사 약 600자. 대사가 적은 대신 표정과 멈춤으로 시간을 채운다.
+- 장소 3곳(교실, 방, 복도), 소품: 과학책, 발표 종이, 휴대폰
+- 연출 포인트: S#4에서 도윤이 고백하기 전 멈춤을 충분히 길게.`;
+
+function loadSample(){
+  const p = parseScript(EXAMPLE);
+  S.meta = Object.assign(defMeta(), {title:p.title, logline:p.logline, lesson:p.lesson, spec:p.spec, memo:p.memo, characters:p.characters, genre:'실사 단편 드라마', sample:true});
+  const mk = (name, org, quote) => ({id:uid(), name, org, quote});
+  const a = mk('이서준','프레임 영상동아리','카메라 앞에서 처음으로 떨어 봤어요');
+  const b = mk('박하은','프레임 영상동아리','하린이가 되어 신나게 놀았어요');
+  const c = mk('최민아','가온초등학교','아이들 덕분에 웃으며 찍었어요');
+  const d = mk('정우진','프레임 영상동아리','모른다고 말하는 용기, 저도 배웠어요');
+  const e = mk('한지안','프레임 영상동아리','흔들리지 않게 숨 참고 찍었어요');
+  const f = mk('오세인','','박수 소리까지 직접 녹음했어요');
+  S.meta.people = [a,b,c,d,e,f];
+  const r = (person, group, kind, character, label) => ({id:uid(), personId:person.id, group, kind, character:character||'', label:label||''});
+  S.meta.roles = [
+    r(a,'cast','lead','도윤'), r(b,'cast','lead','하린'), r(c,'cast','support','선생님'),
+    r(d,'crew','director'), r(d,'crew','writer'), r(e,'crew','dp'), r(e,'crew','edit'), r(f,'crew','sound'), r(f,'crew','music')
+  ];
+  S.script = {scenes:p.scenes, base:0};
+  S.board = {cuts:[]};
+  S.board.cuts = generateCuts(S.script.scenes, []);
+  S.versions = [];
+  ui.sceneId = S.script.scenes[0]?.id || null;
+}
+
+/* ================= 저장 ================= */
+const pending = new Set();
+let saveTimer = null, writing = false, lastErr = '';
+function setStatus(txt, cls){
+  ui.status = [txt, cls || ''];
+  const el = $('#status'); if (el){ el.textContent = txt; el.className = 'status ' + (cls || ''); el.title = cls === 'err' ? lastErr : ''; }
+}
+function touch(name){
+  pending.add(name);
+  if (S.meta.sample && !ui.persistedSample){ ['meta','script','board'].forEach(n => pending.add(n)); ui.persistedSample = true; }
+  setStatus('저장 대기…', 'busy');
+  clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700);
+  scheduleWork();
+}
+function payload(n){ return clone(n === 'meta' ? S.meta : n === 'script' ? S.script : S.board); }
+function localMirror(){ try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch(e){} }
+async function flush(){
+  if (writing) return;
+  writing = true;
+  let names = [];
+  try {
+    while (pending.size){
+      names = [...pending]; pending.clear();
+      setStatus('저장 중…', 'busy');
+      if (Store.db){ for (const n of names) await Store.db.doc('film/' + n).set(payload(n)); }
+      else localMirror();
+      names = [];
+    }
+    setStatus((Store.db ? '저장됨 · ' : '이 브라우저에 저장됨 · ') + nowLabel(), 'ok');
+  } catch(e) {
+    names.forEach(n => pending.add(n));
+    lastErr = (e && (e.message || e.code)) || '알 수 없는 오류';
+    setStatus('저장 실패 · 다시 시도', 'err');
+  }
+  writing = false;
+}
+async function loadAll(){
+  let found = false;
+  if (Store.db){
+    try {
+      const snap = await Store.db.collection('film').get();
+      snap.docs.forEach(d => {
+        const x = clone(d.data() || {});
+        if (d.id === 'meta'){ S.meta = Object.assign(defMeta(), x); found = true; }
+        else if (d.id === 'script'){ S.script = Object.assign({scenes:[], base:0}, x); found = true; }
+        else if (d.id === 'board'){ S.board = Object.assign({cuts:[]}, x); found = true; }
+      });
+      const vs = await Store.db.collection('versions').get();
+      S.versions = vs.docs.map(d => clone(d.data())).sort((p, q) => q.n - p.n);
+    } catch(e) { throw e; }
+  }
+  if (!Store.db){
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (raw){ const x = JSON.parse(raw); S = Object.assign(S, x); S.meta = Object.assign(defMeta(), S.meta); found = true; }
+    } catch(e){}
+  }
+  S.meta.credits = Object.assign({order:'cast-first', org:true, quote:true}, S.meta.credits || {});
+  ['characters','people','roles'].forEach(k => { if (!Array.isArray(S.meta[k])) S.meta[k] = []; });
+  if (!Array.isArray(S.script.scenes)) S.script.scenes = [];
+  if (!Array.isArray(S.board.cuts)) S.board.cuts = [];
+  if (!Array.isArray(S.versions)) S.versions = [];
+  if (!found) loadSample(); else if (S.meta.sample) ui.persistedSample = true;
+  if (!S.script.scenes.find(s => s.id === ui.sceneId)) ui.sceneId = S.script.scenes[0]?.id || null;
+  setStatus(Store.db ? '불러옴 · ' + nowLabel() : '이 브라우저에만 저장돼요', Store.db ? 'ok' : '');
+}
+
+/* ================= 파생 데이터 ================= */
+const curScene = () => S.script.scenes.find(s => s.id === ui.sceneId) || S.script.scenes[0];
+const personById = id => S.meta.people.find(p => p.id === id);
+function roleLabel(r){
+  if (r.kind === 'other') return (r.label || '').trim() || '기타';
+  const k = KINDS[r.group].find(x => x[0] === r.kind); return k ? k[1] : r.kind;
+}
+function allCharacters(){
+  const set = new Map();
+  S.meta.characters.forEach(c => { if (c.name) set.set(c.name, c); });
+  S.script.scenes.forEach(s => s.blocks.forEach(b => { if (b.type === 'dialogue' && b.who && !set.has(b.who.trim())) set.set(b.who.trim(), {name:b.who.trim(), desc:''}); }));
+  S.meta.roles.forEach(r => { if (r.group === 'cast' && r.character && !set.has(r.character.trim())) set.set(r.character.trim(), {name:r.character.trim(), desc:''}); });
+  return [...set.values()];
+}
+function actorMap(){
+  const m = new Map();
+  S.meta.roles.forEach(r => {
+    if (r.group !== 'cast' || !r.character) return;
+    const p = personById(r.personId); if (!p) return;
+    const k = r.character.trim(); if (!m.has(k)) m.set(k, []); m.get(k).push(p.name || '(이름 없음)');
+  });
+  return m;
+}
+function spokenChars(){
+  let n = 0; S.script.scenes.forEach(s => s.blocks.forEach(b => { if (b.type === 'dialogue' || b.type === 'narration') n += (b.text || '').length; }));
+  return n;
+}
+function baseVersion(){ return S.versions.find(v => v.n === S.script.base); }
+function isDirty(){
+  const base = baseVersion();
+  if (!base) return S.script.scenes.length > 0;
+  return JSON.stringify(base.scenes) !== JSON.stringify(S.script.scenes);
+}
+function buildCredits(){
+  const groups = ['cast','crew']; if (S.meta.credits.order === 'crew-first') groups.reverse();
+  return groups.map(g => {
+    const order = KINDS[g].map(k => k[0]);
+    const rs = S.meta.roles.filter(r => r.group === g && personById(r.personId)).slice().sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind));
+    const rows = [], map = new Map();
+    rs.forEach(r => {
+      const label = roleLabel(r); let row = map.get(label);
+      if (!row){ row = {label, entries:[]}; map.set(label, row); rows.push(row); }
+      const p = personById(r.personId);
+      row.entries.push({name:p.name || '(이름 없음)', org:p.org, quote:p.quote, character:r.character});
+    });
+    return {group:g, title:GROUP_LABEL[g], rows};
+  }).filter(s => s.rows.length);
+}
+function creditedIds(){ return new Set(S.meta.roles.filter(r => personById(r.personId)).map(r => r.personId)); }
+
+/* ================= 컷 초안 ================= */
+function generateCuts(scenes, existing){
+  const have = new Set(existing.map(c => c.sceneId));
+  const out = [];
+  scenes.forEach(s => {
+    if (have.has(s.id)) return;
+    const cuts = []; let mode = '';
+    const push = (desc, shot, sec) => { const c = {id:uid(), sceneId:s.id, shot, move:'고정', sec, desc, img:''}; cuts.push(c); return c; };
+    s.blocks.forEach(b => {
+      if (b.type === 'action'){ push(b.text, cuts.length ? '미디엄샷' : '풀샷', 3); mode = 'action'; }
+      else if (b.type === 'dialogue'){
+        const line = (b.who ? b.who + ': ' : '') + (b.paren ? '(' + b.paren + ') ' : '') + b.text;
+        if (mode === 'dialogue' && cuts.length){ const c = cuts[cuts.length-1]; c.desc += '\n' + line; c.shot = '미디엄샷'; c.sec += Math.max(2, Math.round((b.text||'').length / 7)); }
+        else { push(line, '클로즈업', Math.max(2, Math.round((b.text||'').length / 7))); mode = 'dialogue'; }
+      } else {
+        const tag = {narration:'N', caption:'자막', sfx:'효과음', music:'음악'}[b.type];
+        const line = tag + ': ' + b.text;
+        if (cuts.length){ cuts[cuts.length-1].desc += '\n' + line; } else push(line, '풀샷', 2);
+      }
+    });
+    if (!cuts.length) push('', '풀샷', 3);
+    out.push(...cuts);
+  });
+  return out;
+}
+
+/* ================= 렌더링 ================= */
+const TABS = [['make','대본 만들기'],['script','대본'],['people','사람과 역할'],['board','스토리보드'],['credits','엔딩 크레딧']];
+function tabCount(k){
+  if (k === 'script') return S.script.scenes.length ? S.script.scenes.length + '씬' : '';
+  if (k === 'people') return S.meta.people.length ? S.meta.people.length + '명' : '';
+  if (k === 'board') return S.board.cuts.length ? S.board.cuts.length + '컷' : '';
+  return '';
+}
+function headerHTML(){
+  return `<header class="top">
+    <div class="brand"><span class="rec" aria-hidden="true"></span><input id="film-title" data-mf="title" value="${esc(S.meta.title)}" placeholder="영화 제목을 입력하세요" aria-label="영화 제목"></div>
+    <div class="hdr-actions"><button class="btn sm" data-act="export-all" ${ui.loaded ? '' : 'disabled'}>전체 .md 내보내기</button><span id="status" class="status ${esc(ui.status[1])}" role="status">${esc(ui.status[0])}</span><button class="btn sm ghost" data-act="logout" title="${esc(userEmail())}">로그아웃</button></div>
+  </header>
+  <nav class="tabs" role="tablist" aria-label="작업 구역">${TABS.map(([k, n]) => `<button class="tab" role="tab" aria-selected="${ui.tab === k}" data-act="tab" data-tab="${k}">${n}<small>${esc(tabCount(k))}</small></button>`).join('')}</nav>`;
+}
+function bannerHTML(){
+  if (!S.meta.sample) return '';
+  return `<div class="banner"><span>지금 보이는 내용은 예시 프로젝트예요. 마음껏 고쳐 보고, 준비되면 비우고 시작하세요.</span><button class="btn sm" data-act="reset-all" data-confirm="정말 비울까요? 한 번 더">예시 비우고 새로 시작</button></div>`;
+}
+function footHTML(){
+  return `<div class="foot"><span>데이터는 내 계정 저장소에 자동 저장돼요 · ${esc(userEmail())}</span>${S.meta.sample ? '' : `<button class="btn sm ghost" data-act="reset-all" data-confirm="전부 지울까요? 한 번 더">프로젝트 전체 비우기</button>`}</div>`;
+}
+function render(){
+  const app = $('#app'); if (!app) return;
+  if (ui.auth !== 'in'){ app.innerHTML = authHTML(); const f = $('#login-email'); if (f) f.focus(); return; }
+  const y = window.scrollY;
+  stopPlay(true);
+  let body = '';
+  if (ui.loadErr) body = `<div class="card"><h3>작업 공간을 불러오지 못했어요</h3><p class="muted">${esc(ui.loadErr)}</p><p class="muted" style="margin-top:6px">처음 설정이라면 안내서의 schema.sql 실행 단계를 확인해 주세요.</p><div class="row" style="margin-top:12px"><button class="btn primary" data-act="retry-load">다시 시도</button></div></div>`;
+  else if (!ui.loaded) body = '<div class="card"><p class="muted">작업 공간을 여는 중이에요…</p></div>';
+  else body = bannerHTML() + (ui.panel === 'export' && ui.tab !== 'script' && ui.tab !== 'credits' ? panelHTML() : '') + (ui.tab === 'make' ? makeTab() : ui.tab === 'script' ? scriptTab() : ui.tab === 'people' ? peopleTab() : ui.tab === 'board' ? boardTab() : creditsTab());
+  app.innerHTML = headerHTML() + body + (ui.loaded ? footHTML() : '') + datalists();
+  postRender();
+  window.scrollTo(0, y);
+}
+function datalists(){
+  return `<datalist id="chars">${allCharacters().map(c => `<option value="${esc(c.name)}"></option>`).join('')}</datalist><datalist id="times">${TIMES.map(t => `<option value="${t}"></option>`).join('')}</datalist>`;
+}
+function postRender(){
+  $$('textarea[data-autogrow]').forEach(grow);
+  if (ui.focus){ const el = $(ui.focus); if (el){ el.focus(); if (el.select && el.tagName === 'INPUT') el.select(); } ui.focus = ''; }
+  if (ui.tab === 'credits'){ const sc = $('#screen'); if (sc){ ['wheel','touchstart','keydown'].forEach(ev => sc.addEventListener(ev, () => stopPlay(), {passive:true})); } }
+}
+function grow(el){ el.style.height = 'auto'; el.style.height = (el.scrollHeight + 2) + 'px'; }
+
+/* --- 대본 탭 --- */
+function workLines(){
+  const base = baseVersion(), dirty = isDirty();
+  const state = !S.script.scenes.length ? '<span class="pill">비어 있음</span>' : dirty ? '<span class="pill warn">저장 안 한 수정 있음</span>' : '<span class="pill ok">저장한 버전과 같음</span>';
+  return `<div id="work-lines" class="worklines"><div>기준 버전: <b>${base ? 'v' + base.n : (S.versions.length ? '없음' : '아직 없음')}</b> ${state}</div><div class="muted">씬 ${S.script.scenes.length}개 · 대사·내레이션 ${spokenChars()}자</div></div>`;
+}
+function scheduleWork(){
+  clearTimeout(scheduleWork.t);
+  scheduleWork.t = setTimeout(() => { const el = $('#work-lines'); if (el) el.outerHTML = workLines(); }, 250);
+}
+function scriptTab(){
+  const sc = S.script.scenes, cur = curScene();
+  return `<div class="script-grid">
+    <aside class="side">
+      <div class="card"><h3>작업 상태</h3>${workLines()}
+        <div class="btnrow">
+          <button class="btn primary" data-act="panel" data-panel="save">버전으로 저장</button>
+          <button class="btn" data-act="panel" data-panel="versions">버전 기록 ${S.versions.length ? '(' + S.versions.length + ')' : ''}</button>
+          <button class="btn" data-act="panel" data-panel="import">대본 불러오기</button>
+          <button class="btn" data-act="export-script">대본 .md 내보내기</button>
+        </div></div>
+      <div class="card"><h3>씬 목록</h3>
+        <ol class="scene-nav">${sc.map((s, i) => `<li><button class="sn ${cur && s.id === cur.id ? 'on' : ''}" data-act="scene-select" data-sid="${s.id}"><span class="sn-no">S#${i+1}</span><span class="sn-name">${esc(s.place || '장소 미정')}${s.time ? ' · ' + esc(s.time) : ''}</span></button></li>`).join('')}</ol>
+        <button class="btn ghost" data-act="scene-add">+ 씬 추가</button></div>
+    </aside>
+    <section class="main">${panelHTML()}${cur ? sceneEditor(cur, sc.indexOf(cur)) : emptyScript()}</section>
+  </div>`;
+}
+function emptyScript(){
+  return `<div class="empty"><h2>아직 대본이 없어요</h2><p class="muted">/edu-video-script로 만든 대본을 붙여넣으면 씬·지문·대사로 나뉘어 들어와요. 처음부터 직접 쓰려면 빈 씬으로 시작하세요.</p>
+  <div class="row"><button class="btn primary" data-act="panel" data-panel="import">대본 붙여넣기</button><button class="btn" data-act="scene-add">빈 씬으로 시작</button></div></div>`;
+}
+function sceneEditor(s, i){
+  const actors = actorMap();
+  return `<div class="paper" data-sid="${s.id}">
+    <div class="slug">
+      <span class="slug-no">S#${i+1}</span>
+      <input class="in-place" data-sf="place" value="${esc(s.place)}" placeholder="장소 (예: 교실)" aria-label="장소">
+      <input class="in-time" data-sf="time" list="times" value="${esc(s.time)}" placeholder="시간대" aria-label="시간대">
+      <input class="in-range" data-sf="range" value="${esc(s.range)}" placeholder="0:00~0:30" aria-label="예상 시간 구간">
+      <span class="tools"><button class="ico" data-act="scene-up" title="씬을 위로" aria-label="씬을 위로" ${i === 0 ? 'disabled' : ''}>↑</button><button class="ico" data-act="scene-down" title="씬을 아래로" aria-label="씬을 아래로" ${i === S.script.scenes.length - 1 ? 'disabled' : ''}>↓</button><button class="ico" data-act="scene-del" data-confirm="씬·컷 삭제? 한 번 더" title="씬 삭제" aria-label="씬 삭제">✕</button></span>
+    </div>
+    ${s.blocks.map(b => blockHTML(b, actors)).join('')}
+    <div class="addbar"><span>추가</span>${Object.entries(BLOCK_TYPES).map(([k, n]) => `<button class="btn sm" data-act="blk-add" data-type="${k}">+ ${n}</button>`).join('')}</div>
+  </div>`;
+}
+function blockHTML(b, actors){
+  let meta = '';
+  if (b.type === 'dialogue'){
+    const a = b.who && actors.get(b.who.trim());
+    meta = `<input class="who" data-f="who" list="chars" value="${esc(b.who)}" placeholder="인물" aria-label="인물"><input class="paren" data-f="paren" value="${esc(b.paren)}" placeholder="(행동·감정)" aria-label="행동·감정">${b.who ? (a ? `<span class="actor" title="배역을 맡은 사람">${esc(a.join(', '))}</span>` : `<span class="actor none">배우 미정</span>`) : ''}`;
+  }
+  return `<div class="blk t-${b.type}" data-bid="${b.id}">
+    <div class="blk-side"><i></i>${BLOCK_TYPES[b.type]}</div>
+    <div class="blk-main"><div class="blk-meta">${meta}<span class="blk-tools"><button class="ico" data-act="blk-up" aria-label="위로" title="위로">↑</button><button class="ico" data-act="blk-down" aria-label="아래로" title="아래로">↓</button><button class="ico" data-act="blk-del" data-confirm="삭제?" aria-label="삭제" title="삭제">✕</button></span></div>
+    <textarea class="blk-text" data-autogrow data-f="text" rows="1" aria-label="${BLOCK_TYPES[b.type]} 내용" placeholder="${b.type === 'action' ? '카메라에 찍히는 것만 현재형으로' : b.type === 'dialogue' ? '대사' : ''}">${esc(b.text)}</textarea></div>
+  </div>`;
+}
+function panelHTML(){
+  if (ui.panel === 'import'){
+    const existing = S.script.scenes.length > 0;
+    return `<div class="card panel"><h3>대본 불러오기</h3>
+      <p class="muted"># 제목, ## 등장인물, ## 대본, S#1. 장소 (시간) 형식의 /edu-video-script 결과를 그대로 붙여넣으세요. 2단 표 형식은 아직 읽지 못해요.</p>
+      <textarea id="imp-text" class="mono" rows="10" placeholder="# 제목&#10;&#10;## 대본&#10;&#10;S#1. 교실 (아침)  [0:00~0:30]&#10;..."></textarea>
+      <div class="row"><label class="row"><input type="radio" name="imp-mode" id="imp-replace" value="replace" checked> 현재 대본 바꾸기 (컷도 초기화)</label><label class="row"><input type="radio" name="imp-mode" id="imp-append" value="append"> 뒤에 이어 붙이기</label></div>
+      <div id="imp-msg" class="msg" role="alert"></div>
+      <div class="row"><button class="btn primary" data-act="do-import" ${existing ? 'data-confirm="현재 대본이 바뀌어요. 한 번 더"' : ''}>불러오기</button><button class="btn ghost" data-act="panel" data-panel="">닫기</button></div></div>`;
+  }
+  if (ui.panel === 'save'){
+    const next = (S.versions.reduce((m, v) => Math.max(m, v.n), 0)) + 1;
+    return `<div class="card panel"><h3>v${next}로 저장</h3>
+      <p class="muted">지금 대본을 되돌릴 수 있는 버전으로 남겨요. 저장해도 계속 이어서 고칠 수 있어요.</p>
+      <div class="row" style="margin-top:8px"><input id="ver-note" class="grow" placeholder="메모 (예: 3씬 대사 줄임)" aria-label="버전 메모"><button class="btn primary" data-act="do-save-version">저장</button><button class="btn ghost" data-act="panel" data-panel="">닫기</button></div><div id="ver-msg" class="msg" role="alert"></div></div>`;
+  }
+  if (ui.panel === 'versions'){
+    return `<div class="card panel"><div class="row"><h3 class="grow">버전 기록</h3><button class="btn ghost sm" data-act="panel" data-panel="">닫기</button></div>
+      ${S.versions.length ? `<ul class="vlist">${S.versions.map(v => `<li class="vitem"><b>v${v.n}</b><span class="vnote">${esc(v.note || '메모 없음')}</span><span class="muted">${esc(dateLabel(v.savedAt))} · ${v.scenes.length}씬</span>${v.n === S.script.base ? '<span class="pill">현재 기준</span>' : ''}<button class="btn sm" data-act="restore" data-n="${v.n}">이 버전 불러오기</button></li>`).join('')}</ul><p class="muted" style="margin-top:8px">불러오기 전에 저장하지 않은 수정이 있으면 자동으로 버전 하나를 남겨요.</p>` : '<p class="muted" style="margin-top:6px">아직 저장한 버전이 없어요. 왼쪽의 "버전으로 저장"으로 첫 버전을 남겨 보세요.</p>'}</div>`;
+  }
+  if (ui.panel === 'export'){
+    return `<div class="card panel"><h3>${esc(ui.exportTitle || '내보내기')}</h3><p class="muted">파일 저장을 쓸 수 없는 환경이라 텍스트로 보여드려요. 복사해서 .md 파일로 저장하세요.</p><textarea id="export-out" class="out" rows="12" readonly>${esc(ui.exportText)}</textarea><div class="row"><button class="btn primary" data-act="copy-export">복사</button><button class="btn ghost" data-act="panel" data-panel="">닫기</button></div><div id="exp-msg" class="msg"></div></div>`;
+  }
+  return '';
+}
+
+/* --- 사람과 역할 탭 --- */
+function kindOptions(group, sel){ return KINDS[group].map(([k, n]) => `<option value="${k}" ${k === sel ? 'selected' : ''}>${n}</option>`).join(''); }
+function peopleTab(){
+  const chars = allCharacters(), actors = actorMap(), cred = creditedIds();
+  const lacking = S.meta.people.filter(p => !cred.has(p.id));
+  return `<div class="two"><section>
+    <div class="card"><h3>사람 추가</h3><div class="addperson">
+      <label>이름<input id="np-name" placeholder="예: 김하나"></label>
+      <label>소속<input id="np-org" placeholder="예: ○○ 영상동아리"></label>
+      <label class="quote">한마디<input id="np-quote" placeholder="크레딧에 함께 올릴 말"></label>
+      <button class="btn primary" data-act="person-add">추가</button></div>
+      <p class="muted" style="margin-top:8px">출연자와 제작진 모두 같은 목록에 넣고, 아래에서 역할을 붙이면 크레딧에 올라가요. 한 사람이 역할을 여러 개 가질 수 있어요.</p></div>
+    <div class="people">${S.meta.people.length ? S.meta.people.map(personHTML).join('') : '<div class="empty"><h2>아직 등록된 사람이 없어요</h2><p class="muted">위에서 이름을 넣고 추가하면 이곳에 카드가 생겨요.</p></div>'}</div>
+  </section>
+  <aside class="side">
+    <div class="card"><h3>대본 속 배역</h3>${chars.length ? `<ul class="charlist">${chars.map(c => { const a = actors.get(c.name); return `<li><b>${esc(c.name)}</b>${a ? `<span class="actor">${esc(a.join(', '))}</span>` : '<span class="actor none">배우 미정</span>'}${c.desc ? `<span class="muted" style="flex-basis:100%">${esc(c.desc)}</span>` : ''}</li>`; }).join('')}</ul>` : '<p class="muted">대본에 인물이 생기면 여기에 모여요.</p>'}</div>
+    <div class="card"><h3>크레딧 점검</h3><div class="cover"><div>등록한 사람 <b>${S.meta.people.length}명</b>, 역할 <b>${S.meta.roles.length}개</b></div>${lacking.length ? `<div class="norole">역할이 없는 사람 ${lacking.length}명: ${esc(lacking.map(p => p.name || '(이름 없음)').join(', '))}</div><p class="muted">역할이 없으면 크레딧에 오르지 않아요.</p>` : (S.meta.people.length ? '<span class="pill ok">모든 사람이 크레딧에 올라가요</span>' : '')}</div></div>
+    <div class="card"><h3>명단 내보내기</h3><button class="btn" data-act="export-roster" ${S.meta.people.length ? '' : 'disabled'}>출연·제작진 명단 .md</button></div>
+  </aside></div>`;
+}
+function personHTML(p){
+  const rs = S.meta.roles.filter(r => r.personId === p.id);
+  return `<article class="person" data-pid="${p.id}">
+    <div class="person-head">
+      <div class="field"><label>이름<input class="nm" data-pf="name" value="${esc(p.name)}" placeholder="이름"></label></div>
+      <div class="field"><label>소속<input data-pf="org" value="${esc(p.org)}" placeholder="소속"></label></div>
+      <div class="field quote"><label>한마디<input data-pf="quote" value="${esc(p.quote)}" placeholder="한마디"></label></div>
+      <button class="ico" data-act="person-del" data-confirm="삭제? 한 번 더" aria-label="사람 삭제" title="사람 삭제">✕</button>
+    </div>
+    <ul class="rlist">${rs.length ? rs.map(r => `<li class="rchip g-${r.group}" data-rid="${r.id}"><span class="g">${GROUP_LABEL[r.group]}</span>${esc(roleLabel(r))}${r.character ? ' · ' + esc(r.character) + ' 역' : ''}<button class="ico" data-act="role-up" aria-label="같은 역할 안에서 앞으로" title="앞으로">↑</button><button class="ico" data-act="role-down" aria-label="같은 역할 안에서 뒤로" title="뒤로">↓</button><button class="ico" data-act="role-del" aria-label="역할 삭제" title="역할 삭제">✕</button></li>`).join('') : '<li class="norole">역할 없음 · 크레딧에 오르지 않아요</li>'}</ul>
+    <div class="addrole">
+      <select class="r-group" aria-label="구분"><option value="cast">출연</option><option value="crew">제작</option></select>
+      <select class="r-kind" aria-label="역할">${kindOptions('cast', 'lead')}</select>
+      <input class="r-char" list="chars" placeholder="배역 이름" aria-label="배역 이름">
+      <input class="r-label" placeholder="직접 입력" aria-label="역할 이름" hidden>
+      <button class="btn sm" data-act="role-add">역할 추가</button>
+    </div>
+  </article>`;
+}
+
+/* --- 스토리보드 탭 --- */
+function cutsOf(sid){ return S.board.cuts.filter(c => c.sceneId === sid); }
+function boardTotal(){ return S.board.cuts.reduce((n, c) => n + (+c.sec || 0), 0); }
+function boardTab(){
+  const sc = S.script.scenes;
+  if (!sc.length) return '<div class="empty"><h2>스토리보드는 대본에서 시작해요</h2><p class="muted">대본 탭에서 씬을 만들거나 대본을 불러오면, 씬마다 컷 초안을 만들 수 있어요.</p><div class="row"><button class="btn primary" data-act="tab" data-tab="script">대본으로 가기</button></div></div>';
+  const missing = sc.filter(s => !cutsOf(s.id).length).length;
+  return `<div class="bar"><button class="btn primary" data-act="cuts-generate" ${missing ? '' : 'disabled'}>대본으로 컷 초안 만들기${missing ? ' (' + missing + '씬)' : ''}</button><button class="btn" data-act="export-board">스토리보드 .md 내보내기</button><span class="muted">컷 <b id="board-count">${S.board.cuts.length}</b>개 · 예상 <b id="board-total">${fmtSec(boardTotal())}</b></span>${Store.assets ? '' : '<span class="pill warn">이 보기에서는 이미지 첨부를 쓸 수 없어요</span>'}<span class="msg" style="color:var(--ink-2)" role="status">${esc(ui.boardMsg)}</span></div>
+  ${sc.map((s, i) => { const cuts = cutsOf(s.id); const gist = (s.blocks.find(b => b.type === 'action') || s.blocks[0] || {}).text || '';
+    return `<section class="bsec" data-sid="${s.id}"><div class="bsec-h"><b>S#${i+1}</b><span>${esc(s.place || '장소 미정')}${s.time ? ' · ' + esc(s.time) : ''}</span><span class="gist">${esc(gist.length > 70 ? gist.slice(0, 70) + '…' : gist)}</span><button class="btn sm" data-act="cut-add" data-sid="${s.id}">+ 컷 추가</button></div>
+    ${cuts.length ? `<div class="cuts">${cuts.map((c, j) => cutHTML(c, i, j, cuts.length)).join('')}</div>` : '<p class="muted">컷이 없어요. 위의 컷 초안 만들기나 컷 추가를 눌러 보세요.</p>'}</section>`; }).join('')}`;
+}
+function cutHTML(c, i, j, n){
+  const iu = c.img ? Img.src(c.img) : '';
+  const img = iu ? `<img src="${esc(iu)}" alt="C${i+1}-${j+1} 콘티 이미지" loading="lazy">` : (c.img ? `<span class="ph">이미지 불러오는 중…</span>` : `<span class="ph">16:9 · 이미지 없음</span>`);
+  const tools = Store.assets ? `<span class="imgtools"><label class="imgbtn">${c.img ? '바꾸기' : '이미지 추가'}<input type="file" accept="image/*" data-cimg></label>${c.img ? '<button class="imgbtn" data-act="cut-img-del">이미지 지우기</button>' : ''}</span>` : '';
+  return `<article class="cut" data-cid="${c.id}"><div class="frame">${img}<span class="cut-no">C${i+1}-${j+1}</span>${tools}</div>
+    <div class="cut-body"><div class="cut-row">
+      <select data-cf="shot" aria-label="샷 크기">${SHOTS.map(x => `<option ${x === c.shot ? 'selected' : ''}>${x}</option>`).join('')}</select>
+      <select data-cf="move" aria-label="카메라 움직임">${MOVES.map(x => `<option ${x === c.move ? 'selected' : ''}>${x}</option>`).join('')}</select>
+      <label>길이 <input class="sec" type="number" min="0" step="1" data-cf="sec" value="${+c.sec || 0}" aria-label="길이(초)">초</label></div>
+      <textarea class="cut-desc" data-autogrow data-cf="desc" rows="3" placeholder="화면 설명, 카메라 메모" aria-label="컷 설명">${esc(c.desc)}</textarea>
+      <div class="cut-tools"><button class="ico" data-act="cut-up" aria-label="앞으로" title="앞으로" ${j === 0 ? 'disabled' : ''}>←</button><button class="ico" data-act="cut-down" aria-label="뒤로" title="뒤로" ${j === n - 1 ? 'disabled' : ''}>→</button><button class="ico" data-act="cut-del" data-confirm="삭제?" aria-label="컷 삭제" title="컷 삭제">✕</button></div></div></article>`;
+}
+
+/* --- 크레딧 탭 --- */
+function creditsHTML(){
+  const secs = buildCredits(), m = S.meta, o = m.credits;
+  if (!secs.length) return `<div class="cr-title">${esc(m.title || '제목 없음')}</div><p class="cr-empty">아직 역할이 붙은 사람이 없어요. 사람과 역할 탭에서 역할을 추가하면 이곳에 이름이 올라가요.</p>`;
+  const count = creditedIds().size;
+  return `<div class="cr-title">${esc(m.title || '제목 없음')}</div>${m.logline ? `<p class="cr-sub">${esc(m.logline)}</p>` : ''}<div class="cr-spacer"></div>
+  ${secs.map(g => `<section class="cr-group"><h2>${g.title}</h2>${g.rows.map(r => `<div class="cr-row"><div class="cr-label">${esc(r.label)}</div><div class="cr-entries">${r.entries.map(e => `<div><div class="cr-name">${esc(e.name)}${e.character ? `<span class="cr-char">${esc(e.character)} 역</span>` : ''}</div>${o.org && e.org ? `<div class="cr-meta">${esc(e.org)}</div>` : ''}${o.quote && e.quote ? `<div class="cr-quote">“${esc(e.quote)}”</div>` : ''}</div>`).join('')}</div></div>`).join('')}</section>`).join('')}
+  <p class="cr-end">${count}명이 함께 만들었습니다.</p>`;
+}
+function creditsTab(){
+  const o = S.meta.credits, cred = creditedIds(), lacking = S.meta.people.filter(p => !cred.has(p.id));
+  return `${ui.panel === 'export' ? panelHTML() : ''}<div class="credits-grid"><aside class="side">
+    <div class="card"><h3>크레딧 설정</h3><div class="opt">
+      <label>순서<select data-opt="order"><option value="cast-first" ${o.order === 'cast-first' ? 'selected' : ''}>출연 → 제작</option><option value="crew-first" ${o.order === 'crew-first' ? 'selected' : ''}>제작 → 출연</option></select></label>
+      <label><input type="checkbox" data-opt="org" ${o.org ? 'checked' : ''}> 소속 표시</label>
+      <label><input type="checkbox" data-opt="quote" ${o.quote ? 'checked' : ''}> 한마디 표시</label></div></div>
+    <div class="card"><h3>상영</h3><div class="btnrow"><button class="btn primary" id="play-btn" data-act="credits-play">크레딧 재생</button><button class="btn" data-act="export-credits">크레딧 .md 내보내기</button></div></div>
+    <div class="card"><h3>빠진 사람 확인</h3><div class="cover">${lacking.length ? `<div class="norole">${lacking.length}명이 아직 크레딧에 없어요: ${esc(lacking.map(p => p.name || '(이름 없음)').join(', '))}</div><button class="link" data-act="tab" data-tab="people" style="text-align:left">사람과 역할에서 역할 붙이기</button>` : (S.meta.people.length ? '<span class="pill ok">등록한 모든 사람이 올라가요</span>' : '<span class="muted">등록한 사람이 없어요.</span>')}</div></div>
+  </aside><section><div class="screen" id="screen" tabindex="0" aria-label="엔딩 크레딧 미리보기">${creditsHTML()}</div></section></div>`;
+}
+
+/* ================= 크레딧 재생 ================= */
+let raf = null, lastT = 0, pos = 0;
+function stopPlay(silent){
+  ui.playing = false; if (raf) cancelAnimationFrame(raf); raf = null;
+  const sc = $('#screen'); if (sc && !silent) sc.classList.remove('playing');
+  const b = $('#play-btn'); if (b) b.textContent = '크레딧 재생';
+}
+function togglePlay(){
+  const sc = $('#screen'); if (!sc) return;
+  if (ui.playing){ stopPlay(); return; }
+  sc.classList.add('playing'); sc.scrollTop = 0; pos = 0; ui.playing = true; lastT = performance.now();
+  const b = $('#play-btn'); if (b) b.textContent = '정지';
+  raf = requestAnimationFrame(step);
+}
+function step(t){
+  const sc = $('#screen'); if (!sc || !ui.playing){ stopPlay(); return; }
+  pos += (t - lastT) / 1000 * CRED_SPEED; lastT = t; sc.scrollTop = pos;
+  if (sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 1){ stopPlay(true); const b = $('#play-btn'); if (b) b.textContent = '크레딧 재생'; return; }
+  raf = requestAnimationFrame(step);
+}
+
+/* ================= 내보내기 ================= */
+function demote(md){ return md.split('\n').slice(md.startsWith('# ') ? 2 : 0).map(l => /^#{1,5} /.test(l) ? '#' + l : l).join('\n'); }
+function mdEsc(s){ return String(s == null ? '' : s).replace(/\|/g, '\\|').replace(/\r?\n/g, '<br>'); }
+const HB = '  '; // 마크다운 줄바꿈(끝의 공백 두 칸). 불러올 때는 무시돼요.
+function scriptText(){
+  const m = S.meta, L = ['# ' + (m.title || '제목 없음'), ''];
+  if (m.logline) L.push('- 로그라인: ' + m.logline);
+  if (m.spec) L.push('- 대상 / 길이 / 형식: ' + m.spec);
+  if (m.lesson) L.push('- 교훈: ' + m.lesson);
+  if (m.characters.length){ L.push('', '## 등장인물'); m.characters.forEach(c => L.push('- ' + c.name + (c.age ? '(' + c.age + ')' : '') + ': ' + (c.desc || ''))); }
+  L.push('', '## 대본', '');
+  S.script.scenes.forEach((s, i) => {
+    L.push('S#' + (i+1) + '. ' + s.place + (s.time ? ' (' + s.time + ')' : '') + (s.range ? '  [' + s.range + ']' : ''), '');
+    s.blocks.forEach(b => {
+      if (b.type === 'action') L.push('(' + b.text + ')', '');
+      else if (b.type === 'dialogue') L.push((b.who || '') + ': ' + (b.paren ? '(' + b.paren + ') ' : '') + b.text + HB);
+      else L.push({narration:'N', caption:'자막', sfx:'E', music:'M'}[b.type] + ': ' + b.text + HB);
+    });
+    L.push('');
+  });
+  if (m.memo){ L.push('## 제작 메모'); m.memo.split('\n').forEach(x => L.push('- ' + x)); }
+  return L.join('\n').replace(/\n{3,}/g, '\n\n').trimEnd() + '\n';
+}
+function boardText(){
+  const m = S.meta, cuts = S.board.cuts, L = ['# ' + (m.title || '제목 없음') + ' — 스토리보드', ''];
+  if (m.logline) L.push('> ' + m.logline, '');
+  L.push('- 씬 ' + S.script.scenes.length + '개 · 컷 ' + cuts.length + '개 · 예상 길이 ' + fmtSec(boardTotal()), '');
+  let anyImg = false;
+  S.script.scenes.forEach((s, i) => {
+    const cs = cutsOf(s.id);
+    L.push('## S#' + (i+1) + '. ' + (s.place || '장소 미정') + (s.time ? ' (' + s.time + ')' : '') + (s.range ? '  [' + s.range + ']' : ''), '');
+    if (!cs.length){ L.push('_컷이 아직 없어요._', ''); return; }
+    L.push('| 컷 | 샷 | 카메라 | 길이 | 화면 설명 | 이미지 |', '|---|---|---|---|---|---|');
+    cs.forEach((c, j) => { if (c.img) anyImg = true; L.push('| C' + (i+1) + '-' + (j+1) + ' | ' + mdEsc(c.shot) + ' | ' + mdEsc(c.move) + ' | ' + (+c.sec || 0) + '초 | ' + mdEsc(c.desc) + ' | ' + (c.img ? '있음' : '-') + ' |'); });
+    L.push('');
+  });
+  if (anyImg) L.push('> 이미지는 .md 파일에 담기지 않아요. "이미지: 있음" 컷은 앱의 스토리보드 탭에서 확인하세요.', '');
+  return L.join('\n').trimEnd() + '\n';
+}
+function rosterRows(){
+  const L = ['| 이름 | 소속 | 역할 | 한마디 |', '|---|---|---|---|'];
+  S.meta.people.forEach(p => {
+    const rs = S.meta.roles.filter(r => r.personId === p.id).map(r => GROUP_LABEL[r.group] + ' ' + roleLabel(r) + (r.character ? ' (' + r.character + ' 역)' : '')).join(', ');
+    L.push('| ' + mdEsc(p.name) + ' | ' + mdEsc(p.org) + ' | ' + mdEsc(rs || '—') + ' | ' + mdEsc(p.quote) + ' |');
+  });
+  return S.meta.people.length ? L.join('\n') : '_등록된 사람이 없어요._';
+}
+function rosterText(){ return '# ' + (S.meta.title || '제목 없음') + ' — 출연·제작진 명단\n\n' + rosterRows() + '\n'; }
+function creditsText(){
+  const o = S.meta.credits, L = ['# ' + (S.meta.title || '제목 없음') + ' — 엔딩 크레딧', ''];
+  const secs = buildCredits();
+  if (!secs.length) L.push('_아직 역할이 붙은 사람이 없어요._', '');
+  secs.forEach(g => {
+    L.push('## ' + g.title, '');
+    g.rows.forEach(r => {
+      L.push('### ' + r.label, '');
+      r.entries.forEach(e => {
+        L.push('- **' + e.name + '**' + (e.character ? ' (' + e.character + ' 역)' : '') + (o.org && e.org ? ' · ' + e.org : ''));
+        if (o.quote && e.quote) L.push('  > “' + e.quote + '”');
+      });
+      L.push('');
+    });
+  });
+  L.push('---', '', creditedIds().size + '명이 함께 만들었습니다.');
+  return L.join('\n') + '\n';
+}
+function fullText(){
+  const m = S.meta;
+  const L = ['# ' + (m.title || '제목 없음') + ' — 제작 노트', ''];
+  if (m.logline) L.push('> ' + m.logline, '');
+  L.push('- 내보낸 날: ' + new Date().toLocaleDateString('ko-KR'), '', '## 1. 대본', '', demote(scriptText()), '', '## 2. 출연·제작진 명단', '', rosterRows(), '', '## 3. 스토리보드', '', demote(boardText()), '', '## 4. 엔딩 크레딧', '', demote(creditsText()));
+  return L.join('\n').replace(/\n{3,}/g, '\n\n').trimEnd() + '\n';
+}
+function anchorDownload(filename, text){
+  const blob = new Blob([text], {type:'text/markdown;charset=utf-8'});
+  const url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+}
+async function exportFile(filename, text, title){
+  if (Store.downloads){
+    try { await Store.downloads.save({filename, data: text}); return; }
+    catch(e){ if (e && e.code === 'declined') return; }
+  } else if (!window.claude){
+    try { anchorDownload(filename, text); return; } catch(e){}
+  }
+  ui.panel = 'export'; ui.exportText = text; ui.exportTitle = title; render();
+}
+const safeName = s => (s || '영화대본').replace(/[\\/:*?"<>|]/g, ' ').trim().slice(0, 60) || '영화대본';
+
+/* ================= 동작 ================= */
+function arm(btn){
+  btn.dataset.orig = btn.textContent; btn.classList.add('armed'); btn.textContent = btn.dataset.confirm;
+  setTimeout(() => { if (btn.isConnected && btn.classList.contains('armed')){ btn.classList.remove('armed'); btn.textContent = btn.dataset.orig; } }, 3200);
+}
+function swap(arr, a, b){ const t = arr[a]; arr[a] = arr[b]; arr[b] = t; }
+function findBlock(id){ const s = curScene(); return s && s.blocks.find(b => b.id === id); }
+function removeCuts(filter){
+  const gone = S.board.cuts.filter(filter);
+  S.board.cuts = S.board.cuts.filter(c => !filter(c));
+  if (Store.assets) gone.forEach(c => { if (c.img) Store.assets.delete(c.img).catch(() => {}); });
+}
+async function saveVersion(note){
+  const n = S.versions.reduce((m, v) => Math.max(m, v.n), 0) + 1;
+  const v = {n, note: note || '', savedAt: new Date().toISOString(), scenes: clone(S.script.scenes)};
+  if (Store.db) await Store.db.doc('versions/v' + n).set(v);
+  S.versions.unshift(v); S.script.base = n;
+  touch('script');
+  return v;
+}
+async function importScript(src){
+  const fromGen = src === 'gen';
+  const raw = fromGen ? ui.gen.out : (($('#imp-text') || {}).value || '');
+  const msg = fromGen ? $('#gen-msg') : $('#imp-msg');
+  const mode = ($(fromGen ? 'input[name="gen-mode"]:checked' : 'input[name="imp-mode"]:checked') || {}).value || 'replace';
+  const p = parseScript(raw);
+  if (!p.scenes.length){ if (msg) msg.textContent = 'S#1. 장소 (시간) 형식의 씬 제목을 찾지 못했어요. 대본 부분까지 함께 붙여넣었는지 확인해 주세요.'; return; }
+  try {
+    if (mode === 'replace'){
+      if (S.script.scenes.length && isDirty()) await saveVersion('불러오기 전 자동 저장');
+      removeCuts(() => true);
+      S.script.scenes = p.scenes; S.script.base = 0;
+      Object.assign(S.meta, {title:p.title || S.meta.title, logline:p.logline, lesson:p.lesson, spec:p.spec, memo:p.memo, characters:p.characters, sample:false});
+    } else {
+      S.script.scenes = S.script.scenes.concat(p.scenes);
+      const known = new Set(S.meta.characters.map(c => c.name));
+      p.characters.forEach(c => { if (!known.has(c.name)) S.meta.characters.push(c); });
+      if (!S.meta.title) S.meta.title = p.title;
+      S.meta.sample = false;
+    }
+  } catch(e){ if (msg) msg.textContent = '자동 저장에 실패해서 멈췄어요. 잠시 뒤 다시 시도해 주세요.'; return; }
+  ui.sceneId = S.script.scenes[mode === 'append' ? S.script.scenes.length - p.scenes.length : 0].id;
+  ui.panel = ''; ['meta','script','board'].forEach(touch);
+  if (fromGen){ ui.tab = 'script'; try { localStorage.setItem('filmstudio.tab', 'script'); } catch(e){} }
+  render();
+}
+async function resetAll(){
+  removeCuts(() => true);
+  if (Store.db){ for (const v of S.versions){ try { await Store.db.doc('versions/v' + v.n).delete(); } catch(e){} } }
+  S.meta = defMeta(); S.script = {scenes:[], base:0}; S.board = {cuts:[]}; S.versions = []; ui.sceneId = null; ui.panel = 'import'; ui.persistedSample = false;
+  ['meta','script','board'].forEach(touch); render();
+}
+async function uploadImage(file, cid){
+  const c = S.board.cuts.find(x => x.id === cid); if (!c || !Store.assets) return;
+  ui.boardMsg = '이미지 올리는 중…'; const m = $('.msg[role="status"]'); if (m) m.textContent = ui.boardMsg;
+  try {
+    const bmp = await createImageBitmap(file);
+    const k = Math.min(1, 1280 / Math.max(bmp.width, bmp.height));
+    const cv = document.createElement('canvas'); cv.width = Math.round(bmp.width * k); cv.height = Math.round(bmp.height * k);
+    cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height);
+    const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.82));
+    const res = await Store.assets.upload(blob);
+    if (c.img) Store.assets.delete(c.img).catch(() => {});
+    c.img = res.id; touch('board'); ui.boardMsg = '';
+  } catch(e){ ui.boardMsg = '이미지를 올리지 못했어요. 다른 파일(JPG, PNG)로 다시 시도해 주세요.'; }
+  render();
+}
+function syncRoleRow(row){
+  const g = $('.r-group', row).value, k = $('.r-kind', row);
+  if (!KINDS[g].some(x => x[0] === k.value)) k.innerHTML = kindOptions(g, KINDS[g][0][0]);
+  $('.r-char', row).hidden = g !== 'cast';
+  $('.r-label', row).hidden = k.value !== 'other';
+}
+
+/* ================= 대본 만들기: /edu-video-script 규칙으로 Claude에게 요청 ================= */
+/* 스킬 규칙은 서버(api/_rules.js)에 있다. */
+const GEN_EXAMPLES = [
+  '물건을 깨뜨리고 모른 척하다가 일이 점점 커지는 아이 이야기. 교훈은 정직.',
+  '뭐든 3분 만에 포기하던 아이가 처음으로 끝까지 해내는 이야기. 교훈은 끈기.',
+  '전학 온 친구를 몰래 도와주던 아이가 들키게 되는 이야기. 교훈은 배려.'
+];
+const GEN_LEN = [['', '기본 (3분)'], ['1분 쇼츠, 3씬', '1분 쇼츠'], ['3분, 5~6씬', '3분'], ['5분, 8~9씬', '5분']];
+const GEN_AUD = [['', '기본 (초등 고학년)'], ['초등학교 저학년', '초등 저학년'], ['중학생', '중학생'], ['청소년과 성인', '청소년·성인']];
+let genCtl = null;
+
+function saveGenDraft(){
+  try { const g = ui.gen; localStorage.setItem('filmstudio.gen', JSON.stringify({idea:g.idea, len:g.len, aud:g.aud, out:g.out})); } catch(e){}
+}
+function genSummaryHTML(){
+  const out = ui.gen.out; if (!out.trim()) return '';
+  const p = parseScript(out);
+  if (!p.scenes.length) return ui.gen.busy ? '' : '<span class="pill warn">씬을 찾지 못했어요</span>';
+  let n = 0; p.scenes.forEach(s => s.blocks.forEach(b => { if (b.type === 'dialogue' || b.type === 'narration') n += (b.text || '').length; }));
+  const who = [...new Set(p.characters.map(c => c.name))].join(', ');
+  return `<span class="pill ok">씬 ${p.scenes.length}개</span> 대사·내레이션 ${n}자${who ? ' · 인물 ' + esc(who) : ''}`;
+}
+function syncGenSummary(){
+  const s = $('#gen-sum'); if (s) s.innerHTML = genSummaryHTML();
+  const b = $('[data-act="gen-import"]'); if (b) b.disabled = ui.gen.busy || !parseScript(ui.gen.out).scenes.length;
+}
+function syncGen(){
+  const o = $('#gen-out'); if (o && o.value !== ui.gen.out){ o.value = ui.gen.out; o.scrollTop = o.scrollHeight; }
+  const m = $('#gen-msg'); if (m) m.textContent = ui.gen.msg;
+  syncGenSummary();
+}
+function genErrText(e){
+  const code = e && e.code;
+  const map = {
+    not_granted:'Claude 사용을 허용하지 않아서 만들 수 없어요.',
+    sampling_disabled:'이 계정에서는 Claude를 쓸 수 없어요.',
+    not_declared:'이 페이지는 대본 생성을 쓸 수 없어요.',
+    rate_limited:'요청이 많거나 사용 한도에 닿았어요. 잠시 뒤 다시 눌러 주세요.',
+    session_expired:'로그인이 만료됐어요. 다시 로그인해 주세요.',
+    refused:'이 요청으로는 대본을 만들 수 없었어요. 내용을 바꿔서 다시 시도해 주세요.',
+    empty_completion:'답이 비어 있었어요. 요청을 조금 더 구체적으로 적어 주세요.',
+    prompt_too_large:'요청이 너무 길어요. 줄여서 다시 시도해 주세요.',
+    cancelled:'중단했어요.',
+    network:'네트워크가 끊겨서 중단됐어요.',
+    server_misconfigured:'서버 설정이 아직 끝나지 않았어요. 안내서의 환경 변수를 확인해 주세요.',
+    forbidden:'이 계정은 대본 만들기를 쓸 수 없어요.',
+    empty_request:'만들고 싶은 이야기를 먼저 적어 주세요.'
+  };
+  return map[code] || '대본 만들기에 실패했어요. 잠시 뒤 다시 눌러 주세요.';
+}
+async function genStart(){
+  const g = ui.gen;
+  if (g.busy || g.blocked) return;
+  const idea = (g.idea || '').trim();
+  if (!idea){ g.msg = '만들고 싶은 이야기를 먼저 적어 주세요.'; syncGen(); const t = $('#gen-idea'); if (t) t.focus(); return; }
+  if (!Store.sample) return;
+  const input = {idea, len: g.len, aud: g.aud};
+  genCtl = new AbortController();
+  g.busy = true; g.out = ''; g.msg = 'Claude가 이야기를 구상하는 중이에요. 30초에서 1분쯤 걸려요.';
+  render();
+  try {
+    const res = await Store.sample(input, {signal: genCtl.signal, cache: false, onText: ({text}) => { g.out = text; g.msg = '대본을 쓰는 중이에요…'; syncGen(); }});
+    g.out = res.text;
+    g.msg = res.truncated ? '길이 제한에 걸려 끝이 잘렸을 수 있어요. 길이를 줄여 다시 만들어 보세요.' : '완성됐어요. 읽어 보고 고친 뒤 대본 탭으로 가져오세요.';
+  } catch(e){
+    if (e && e.text) g.out = e.text;
+    g.msg = genErrText(e) + (e && e.text && e.code !== 'cancelled' ? ' 받은 데까지는 남겨 두었어요.' : '');
+    if (e && ['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].includes(e.code)) g.blocked = true;
+  }
+  g.busy = false; genCtl = null; saveGenDraft(); render();
+}
+function makeTab(){
+  const g = ui.gen, ready = !!Store.sample && !g.blocked, hasScenes = S.script.scenes.length > 0;
+  const canImport = !g.busy && parseScript(g.out).scenes.length > 0;
+  return `<div class="gen-grid">
+  <section class="card"><h3>만들고 싶은 이야기</h3>
+    <p class="muted">어떤 영상인지 자유롭게 적어 주세요. 교훈, 인물, 분위기를 적을수록 방향이 또렷해져요. 적지 않은 항목은 /edu-video-script의 기본값(초등 고학년, 3분, 실사 단편 드라마)으로 정해요.</p>
+    <textarea id="gen-idea" data-gen="idea" placeholder="예: 숙제를 안 해 놓고 거짓말하는 아이가 친구 덕분에 솔직해지는 이야기. 교훈은 정직. 인물은 둘." ${g.busy ? 'readonly' : ''}>${esc(g.idea)}</textarea>
+    <div class="examples"><span>예시</span>${GEN_EXAMPLES.map((x, i) => `<button class="btn sm" data-act="gen-example" data-i="${i}" ${g.busy ? 'disabled' : ''}>${['정직', '끈기', '배려'][i]}</button>`).join('')}</div>
+    <div class="opts"><label>길이<select id="gen-len" data-gen="len" ${g.busy ? 'disabled' : ''}>${GEN_LEN.map(([v, l]) => `<option value="${esc(v)}" ${v === g.len ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+      <label>대상<select id="gen-aud" data-gen="aud" ${g.busy ? 'disabled' : ''}>${GEN_AUD.map(([v, l]) => `<option value="${esc(v)}" ${v === g.aud ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>
+    <div class="row">${g.busy ? '<button class="btn" data-act="gen-stop">중단</button>' : `<button class="btn primary" data-act="gen-start" ${ready ? '' : 'disabled'}>대본 만들기</button>`}<span class="muted">Ctrl+Enter로도 시작해요</span></div>
+    ${ready ? '' : `<p class="msg" style="color:var(--warn);margin-top:10px">${Store.sample ? '대본 만들기를 쓸 수 없는 상태예요.' : '이 보기에서는 대본 만들기를 쓸 수 없어요.'} Claude 채팅에서 /edu-video-script로 만든 대본을 대본 탭의 "대본 불러오기"에 붙여넣어도 같은 결과가 돼요.</p>`}
+  </section>
+  <section class="card"><h3>만들어진 대본</h3>
+    <p id="gen-msg" class="msg" style="color:var(--ink-2)" role="status">${esc(g.msg)}</p>
+    <textarea id="gen-out" class="gen-out" data-gen="out" placeholder="여기에 대본이 만들어져요. 만든 뒤 직접 고칠 수도 있어요." ${g.busy ? 'readonly' : ''}>${esc(g.out)}</textarea>
+    <div id="gen-sum" class="gen-sum">${genSummaryHTML()}</div>
+    <div class="row" style="margin-top:10px"><label class="row"><input type="radio" name="gen-mode" id="gen-replace" value="replace" checked> 현재 대본 바꾸기</label><label class="row"><input type="radio" name="gen-mode" id="gen-append" value="append"> 뒤에 이어 붙이기</label></div>
+    <p class="muted" style="margin-top:4px">바꾸기를 고르면 저장하지 않은 수정은 버전으로 자동 저장하고, 스토리보드 컷은 초기화돼요.</p>
+    <div class="row" style="margin-top:10px"><button class="btn primary" data-act="gen-import" ${hasScenes ? 'data-confirm="대본에 반영할까요? 한 번 더"' : ''} ${canImport ? '' : 'disabled'}>대본 탭으로 가져오기</button><button class="btn" data-act="gen-save" ${g.out && !g.busy ? '' : 'disabled'}>.md로 저장</button><button class="btn" data-act="gen-copy" ${g.out ? '' : 'disabled'}>복사</button></div>
+  </section></div>`;
+}
+
+/* ================= 이벤트 ================= */
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (!t.dataset) return;
+  if (t.dataset.gen){ ui.gen[t.dataset.gen] = t.value; if (t.dataset.gen === 'out') syncGenSummary(); saveGenDraft(); return; }
+  if (t.dataset.mf){ S.meta[t.dataset.mf] = t.value; touch('meta'); return; }
+  if (t.dataset.sf){ const s = curScene(); if (!s) return; s[t.dataset.sf] = t.value; touch('script'); const nav = $('.sn.on .sn-name'); if (nav) nav.textContent = (s.place || '장소 미정') + (s.time ? ' · ' + s.time : ''); return; }
+  if (t.dataset.f){ const row = t.closest('.blk'); const b = row && findBlock(row.dataset.bid); if (!b) return; b[t.dataset.f] = t.value; if (t.tagName === 'TEXTAREA') grow(t); touch('script'); return; }
+  if (t.dataset.pf){ const p = personById(t.closest('.person').dataset.pid); if (!p) return; p[t.dataset.pf] = t.value; touch('meta'); return; }
+  if (t.dataset.cf){
+    const c = S.board.cuts.find(x => x.id === t.closest('.cut').dataset.cid); if (!c) return;
+    c[t.dataset.cf] = t.dataset.cf === 'sec' ? Math.max(0, +t.value || 0) : t.value;
+    if (t.tagName === 'TEXTAREA') grow(t);
+    if (t.dataset.cf === 'sec'){ const el = $('#board-total'); if (el) el.textContent = fmtSec(boardTotal()); }
+    touch('board'); return;
+  }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.matches && t.matches('input[type="file"][data-cimg]')){ const f = t.files && t.files[0]; if (f) uploadImage(f, t.closest('.cut').dataset.cid); return; }
+  if (t.dataset && t.dataset.opt){
+    const o = S.meta.credits; o[t.dataset.opt] = t.type === 'checkbox' ? t.checked : t.value; touch('meta');
+    const sc = $('#screen'); if (sc){ stopPlay(); sc.classList.remove('playing'); sc.innerHTML = creditsHTML(); sc.scrollTop = 0; }
+    return;
+  }
+  if (t.classList && (t.classList.contains('r-group') || t.classList.contains('r-kind'))) syncRoleRow(t.closest('.addrole'));
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || e.isComposing) return;
+  const t = e.target;
+  if (t.id === 'np-name' || t.id === 'np-org' || t.id === 'np-quote'){ e.preventDefault(); act('person-add', t); }
+  else if (t.id === 'ver-note'){ e.preventDefault(); act('do-save-version', t); }
+  else if (t.id === 'gen-idea' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); act('gen-start', t); }
+  else if (t.classList && (t.classList.contains('r-char') || t.classList.contains('r-label'))){ e.preventDefault(); act('role-add', t); }
+});
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-act]'); if (!btn) return;
+  if (btn.dataset.confirm && !btn.classList.contains('armed')){ arm(btn); return; }
+  act(btn.dataset.act, btn);
+});
+
+async function act(name, el){
+  const sceneIdx = () => S.script.scenes.findIndex(s => s.id === ui.sceneId);
+  switch (name){
+    case 'logout': sb.auth.signOut().finally(() => location.reload()); break;
+    case 'retry-load': openWorkspace(); break;
+    case 'tab': ui.tab = el.dataset.tab; ui.panel = ''; try { localStorage.setItem('filmstudio.tab', ui.tab); } catch(e){} render(); break;
+    case 'panel': ui.panel = el.dataset.panel; render(); if (ui.panel === 'import') { const t = $('#imp-text'); if (t) t.focus(); } else if (ui.panel === 'save') { const t = $('#ver-note'); if (t) t.focus(); } break;
+    case 'scene-select': ui.sceneId = el.dataset.sid; render(); break;
+    case 'scene-add': { const s = {id:uid(), place:'', time:'', range:'', blocks:[blk('action', {text:''})]}; S.script.scenes.push(s); ui.sceneId = s.id; ui.tab = 'script'; ui.focus = '.in-place'; touch('script'); render(); break; }
+    case 'scene-up': { const i = sceneIdx(); if (i > 0){ swap(S.script.scenes, i, i-1); touch('script'); render(); } break; }
+    case 'scene-down': { const i = sceneIdx(); if (i > -1 && i < S.script.scenes.length - 1){ swap(S.script.scenes, i, i+1); touch('script'); render(); } break; }
+    case 'scene-del': { const i = sceneIdx(); if (i < 0) break; const id = S.script.scenes[i].id; S.script.scenes.splice(i, 1); removeCuts(c => c.sceneId === id); ui.sceneId = (S.script.scenes[i] || S.script.scenes[i-1] || {}).id || null; touch('script'); touch('board'); render(); break; }
+    case 'blk-add': { const s = curScene(); if (!s) break; const b = blk(el.dataset.type); s.blocks.push(b); ui.focus = `.blk[data-bid="${b.id}"] ${el.dataset.type === 'dialogue' ? '.who' : '.blk-text'}`; touch('script'); render(); break; }
+    case 'blk-up': case 'blk-down': { const s = curScene(), id = el.closest('.blk').dataset.bid; if (!s) break; const i = s.blocks.findIndex(b => b.id === id), j = name === 'blk-up' ? i - 1 : i + 1; if (j < 0 || j >= s.blocks.length) break; swap(s.blocks, i, j); ui.focus = `.blk[data-bid="${id}"] .blk-text`; touch('script'); render(); break; }
+    case 'blk-del': { const s = curScene(), id = el.closest('.blk').dataset.bid; if (!s) break; s.blocks = s.blocks.filter(b => b.id !== id); touch('script'); render(); break; }
+    case 'do-save-version': {
+      const note = ($('#ver-note') || {}).value || '', msg = $('#ver-msg');
+      if (!S.script.scenes.length){ if (msg) msg.textContent = '저장할 대본이 아직 없어요.'; break; }
+      try { await saveVersion(note.trim()); ui.panel = 'versions'; render(); } catch(e){ if (msg) msg.textContent = '버전을 저장하지 못했어요. 대본이 너무 크거나 저장소에 문제가 있어요.'; }
+      break;
+    }
+    case 'restore': {
+      const v = S.versions.find(x => x.n === +el.dataset.n); if (!v) break;
+      try { if (isDirty() && S.script.scenes.length) await saveVersion('복원 전 자동 저장'); } catch(e){ break; }
+      S.script.scenes = clone(v.scenes); S.script.base = v.n;
+      const have = new Set(S.script.scenes.map(s => s.id)); removeCuts(c => !have.has(c.sceneId));
+      ui.sceneId = S.script.scenes[0]?.id || null; ui.panel = ''; touch('script'); touch('board'); render(); break;
+    }
+    case 'do-import': importScript(); break;
+    case 'gen-import': importScript('gen'); break;
+    case 'gen-start': genStart(); break;
+    case 'gen-stop': if (genCtl) genCtl.abort(); break;
+    case 'gen-example': ui.gen.idea = GEN_EXAMPLES[+el.dataset.i] || ''; saveGenDraft(); ui.focus = '#gen-idea'; render(); break;
+    case 'gen-copy': { const ta = $('#gen-out'); if (!ta) break; try { await navigator.clipboard.writeText(ta.value); el.textContent = '복사했어요'; } catch(e){ ta.focus(); ta.select(); } break; }
+    case 'export-script': exportFile(safeName(S.meta.title) + '-대본' + (S.script.base ? '-v' + S.script.base : '') + '.md', scriptText(), '대본 (.md)'); break;
+    case 'export-board': exportFile(safeName(S.meta.title) + '-스토리보드.md', boardText(), '스토리보드 (.md)'); break;
+    case 'export-credits': exportFile(safeName(S.meta.title) + '-엔딩크레딧.md', creditsText(), '엔딩 크레딧 (.md)'); break;
+    case 'export-roster': exportFile(safeName(S.meta.title) + '-출연제작진명단.md', rosterText(), '출연·제작진 명단 (.md)'); break;
+    case 'export-all': exportFile(safeName(S.meta.title) + '-제작노트.md', fullText(), '전체 제작 노트 (.md)'); break;
+    case 'gen-save': { const p = parseScript(ui.gen.out); exportFile(safeName(p.title || (ui.gen.idea || '').slice(0, 20) || '생성 대본') + '-생성대본.md', ui.gen.out.trimEnd() + '\n', '생성한 대본 (.md)'); break; }
+    case 'copy-export': { const ta = $('#export-out'), msg = $('#exp-msg'); try { await navigator.clipboard.writeText(ta.value); if (msg) msg.textContent = ''; el.textContent = '복사했어요'; } catch(e){ ta.focus(); ta.select(); if (msg) msg.textContent = '자동 복사가 막혀 있어요. 선택된 텍스트를 직접 복사해 주세요.'; } break; }
+    case 'person-add': {
+      const n = $('#np-name'), o = $('#np-org'), q = $('#np-quote');
+      if (!n.value.trim()){ n.focus(); break; }
+      const p = {id:uid(), name:n.value.trim(), org:o.value.trim(), quote:q.value.trim()};
+      S.meta.people.push(p); ui.focus = `.person[data-pid="${p.id}"] .r-kind`; touch('meta'); render(); break;
+    }
+    case 'person-del': { const id = el.closest('.person').dataset.pid; S.meta.people = S.meta.people.filter(p => p.id !== id); S.meta.roles = S.meta.roles.filter(r => r.personId !== id); touch('meta'); render(); break; }
+    case 'role-add': {
+      const card = el.closest('.person'), row = el.closest('.addrole'); if (!card) break;
+      const group = $('.r-group', row).value, kind = $('.r-kind', row).value;
+      const r = {id:uid(), personId:card.dataset.pid, group, kind, character: group === 'cast' ? $('.r-char', row).value.trim() : '', label: kind === 'other' ? $('.r-label', row).value.trim() : ''};
+      if (kind === 'other' && !r.label){ $('.r-label', row).focus(); break; }
+      S.meta.roles.push(r); ui.focus = `.person[data-pid="${card.dataset.pid}"] .r-kind`; touch('meta'); render(); break;
+    }
+    case 'role-del': { const id = el.closest('.rchip').dataset.rid; S.meta.roles = S.meta.roles.filter(r => r.id !== id); touch('meta'); render(); break; }
+    case 'role-up': case 'role-down': {
+      const id = el.closest('.rchip').dataset.rid, a = S.meta.roles, i = a.findIndex(r => r.id === id), me = a[i], dir = name === 'role-up' ? -1 : 1;
+      const same = r => r.group === me.group && roleLabel(r) === roleLabel(me);
+      let j = i + dir; while (j >= 0 && j < a.length && !same(a[j])) j += dir;
+      if (j >= 0 && j < a.length){ swap(a, i, j); touch('meta'); render(); } break;
+    }
+    case 'cuts-generate': {
+      const add = generateCuts(S.script.scenes, S.board.cuts); S.board.cuts = S.board.cuts.concat(add);
+      ui.boardMsg = add.length + '개의 컷 초안을 만들었어요. 샷 크기와 설명을 다듬어 보세요.'; touch('board'); render(); break;
+    }
+    case 'cut-add': { const c = {id:uid(), sceneId:el.dataset.sid, shot:'미디엄샷', move:'고정', sec:3, desc:'', img:''}; S.board.cuts.push(c); ui.focus = `.cut[data-cid="${c.id}"] .cut-desc`; touch('board'); render(); break; }
+    case 'cut-up': case 'cut-down': {
+      const id = el.closest('.cut').dataset.cid, c = S.board.cuts.find(x => x.id === id); if (!c) break;
+      const a = S.board.cuts, i = a.indexOf(c), dir = name === 'cut-up' ? -1 : 1;
+      let j = i + dir; while (j >= 0 && j < a.length && a[j].sceneId !== c.sceneId) j += dir;
+      if (j >= 0 && j < a.length){ swap(a, i, j); touch('board'); render(); } break;
+    }
+    case 'cut-del': { const id = el.closest('.cut').dataset.cid; removeCuts(c => c.id === id); touch('board'); render(); break; }
+    case 'cut-img-del': { const c = S.board.cuts.find(x => x.id === el.closest('.cut').dataset.cid); if (c && c.img){ if (Store.assets) Store.assets.delete(c.img).catch(() => {}); c.img = ''; touch('board'); render(); } break; }
+    case 'credits-play': togglePlay(); break;
+    case 'reset-all': resetAll(); break;
+  }
+}
+document.addEventListener('click', e => { const s = e.target.closest('#status'); if (s && s.classList.contains('err')) flush(); });
+
+/* ================= 시작 ================= */
+/* ================= 로그인 · Supabase 연결 ================= */
+const CFG = window.APP_CONFIG || {};
+let sb = null, session = null;
+const configured = () => !!(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY && !/YOUR-/.test(CFG.SUPABASE_URL + CFG.SUPABASE_ANON_KEY));
+const userEmail = () => (session && session.user && session.user.email) || '';
+
+function authHTML(){
+  const wrap = inner => `<main class="auth"><section class="auth-card"><div class="auth-logo"><span class="rec" aria-hidden="true"></span><span>영화대본 스튜디오</span></div>${inner}</section></main>`;
+  if (ui.auth === 'setup') return wrap('<h1>설정이 필요해요</h1><p class="muted" style="margin-top:8px"><code>config.js</code>에 Supabase 주소와 anon 키를 넣은 뒤 다시 배포해 주세요. 자세한 순서는 안내서(README)에 있어요.</p>');
+  if (ui.auth === 'nolib') return wrap('<h1>불러오지 못했어요</h1><p class="muted" style="margin-top:8px">로그인 모듈을 내려받지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.</p>');
+  if (ui.auth === 'checking') return wrap('<p class="muted">확인하는 중이에요…</p>');
+  return wrap(`<h1>로그인</h1><p class="muted">지정된 계정만 사용할 수 있어요.</p>
+  <form id="login-form" novalidate>
+    <label>이메일<input id="login-email" type="email" autocomplete="username" inputmode="email" required></label>
+    <label>비밀번호<input id="login-pw" type="password" autocomplete="current-password" required></label>
+    <p id="login-msg" class="msg" role="alert">${esc(ui.authMsg)}</p>
+    <button class="btn primary lg" type="submit">로그인</button>
+  </form>`);
+}
+function loginErrText(e){
+  const m = String((e && e.message) || '').toLowerCase();
+  if (m.includes('invalid login')) return '이메일 또는 비밀번호가 맞지 않아요.';
+  if (m.includes('rate') || e && e.status === 429) return '시도가 너무 많아요. 잠시 뒤 다시 해 주세요.';
+  if (m.includes('failed to fetch') || m.includes('network')) return '네트워크에 연결하지 못했어요.';
+  return '로그인하지 못했어요. 잠시 뒤 다시 해 주세요.';
+}
+document.addEventListener('submit', async e => {
+  if (!e.target || e.target.id !== 'login-form') return;
+  e.preventDefault();
+  const email = $('#login-email').value.trim(), pw = $('#login-pw').value;
+  const msg = $('#login-msg'), btn = e.target.querySelector('button[type="submit"]');
+  if (!email || !pw){ msg.textContent = '이메일과 비밀번호를 입력해 주세요.'; return; }
+  btn.disabled = true; msg.textContent = '로그인 중…';
+  try {
+    const r = await sb.auth.signInWithPassword({email, password: pw});
+    if (r.error) throw r.error;
+    session = r.data.session;
+    await openWorkspace();
+  } catch(err){
+    ui.authMsg = loginErrText(err);
+    if (ui.auth !== 'in'){ msg.textContent = ui.authMsg; btn.disabled = false; const p = $('#login-pw'); if (p){ p.value = ''; p.focus(); } }
+  }
+});
+
+/* Supabase를 기존 저장소 인터페이스(db / assets / sample)에 맞춰 연결한다 */
+function makeDb(){
+  const uid = session.user.id;
+  const T = () => sb.from('docs');
+  const chk = r => { if (r.error){ const e = new Error(r.error.message || '저장소 오류'); e.code = r.error.code; throw e; } return r; };
+  return {
+    doc: path => ({
+      set: async data => { chk(await T().upsert({user_id: uid, path, data, updated_at: new Date().toISOString()}, {onConflict: 'user_id,path'})); },
+      delete: async () => { chk(await T().delete().eq('user_id', uid).eq('path', path)); }
+    }),
+    collection: name => ({
+      get: async () => {
+        const r = chk(await T().select('path,data').like('path', name + '/%'));
+        return {docs: (r.data || []).map(x => ({id: x.path.slice(name.length + 1), data: () => x.data}))};
+      }
+    })
+  };
+}
+const BUCKET = 'cuts';
+const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+const Img = {
+  map: new Map(), busy: new Set(), timer: 0,
+  src(id){ const e = this.map.get(id); if (e && e.exp > Date.now()) return e.url; this.load([id]); return ''; },
+  async load(ids){
+    const need = ids.filter(i => i && !this.busy.has(i)); if (!need.length || !sb) return;
+    need.forEach(i => this.busy.add(i));
+    let got = 0;
+    try {
+      const r = await sb.storage.from(BUCKET).createSignedUrls(need, 21600);
+      (r.data || []).forEach(x => {
+        if (x && x.signedUrl){ this.map.set(x.path, {url: x.signedUrl, exp: Date.now() + 20 * 60 * 1000 * 15}); got++; }
+        else if (x && x.path) this.map.set(x.path, {url: '', exp: Date.now() + 60000});
+      });
+    } catch(e){ need.forEach(i => this.map.set(i, {url: '', exp: Date.now() + 60000})); }
+    need.forEach(i => this.busy.delete(i));
+    if (got && !this.timer) this.timer = setTimeout(() => { this.timer = 0; if (ui.auth === 'in' && ui.loaded) render(); }, 80);
+  },
+  prefetch(){ return this.load(S.board.cuts.map(c => c.img).filter(Boolean)); },
+  drop(id){ this.map.delete(id); }
+};
+function makeAssets(){
+  const uid = session.user.id;
+  return {
+    upload: async blob => {
+      const id = uid + '/' + uuid() + '.jpg';
+      const r = await sb.storage.from(BUCKET).upload(id, blob, {contentType: 'image/jpeg', upsert: false, cacheControl: '3600'});
+      if (r.error) throw new Error(r.error.message);
+      await Img.load([id]);
+      return {id};
+    },
+    delete: async id => { Img.drop(id); const r = await sb.storage.from(BUCKET).remove([id]); if (r.error) throw new Error(r.error.message); }
+  };
+}
+/* 대본 생성: 서버 함수(/api/generate)가 스킬 규칙과 함께 Claude를 호출한다. 줄 단위 JSON을 읽어 글자를 이어 붙인다. */
+function makeSample(){
+  return async (input, opts) => {
+    opts = opts || {};
+    const sess = (await sb.auth.getSession()).data.session;
+    if (!sess) throw {code: 'session_expired'};
+    let resp;
+    try {
+      resp = await fetch('/api/generate', {method: 'POST', headers: {'content-type': 'application/json', authorization: 'Bearer ' + sess.access_token}, body: JSON.stringify(input), signal: opts.signal});
+    } catch(e){ throw {code: e && e.name === 'AbortError' ? 'cancelled' : 'network', text: ''}; }
+    if (!resp.ok){ let code = 'upstream_error'; try { code = (await resp.json()).code || code; } catch(e){} throw {code}; }
+    const rd = resp.body.getReader(), dec = new TextDecoder();
+    let buf = '', text = '', truncated = false;
+    try {
+      for (;;){
+        const {done, value} = await rd.read(); if (done) break;
+        buf += dec.decode(value, {stream: true});
+        let i;
+        while ((i = buf.indexOf('\n')) >= 0){
+          const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1); if (!line) continue;
+          let m; try { m = JSON.parse(line); } catch(e){ continue; }
+          if (m.t === 'd'){ text += m.x; if (opts.onText) opts.onText({text}); }
+          else if (m.t === 'e'){ throw {code: m.code, text}; }
+          else if (m.t === 'done'){ truncated = !!m.truncated; }
+        }
+      }
+    } catch(e){
+      if (e && e.name === 'AbortError') throw {code: 'cancelled', text};
+      if (e && e.code) throw e;
+      throw {code: 'network', text};
+    }
+    if (!text.trim()) throw {code: 'empty_completion'};
+    return {text, truncated};
+  };
+}
+
+async function openWorkspace(){
+  ui.auth = 'in'; ui.loaded = false; ui.loadErr = ''; render();
+  Store.db = makeDb(); Store.assets = makeAssets(); Store.sample = makeSample(); Store.downloads = null;
+  try { await loadAll(); Img.prefetch(); }
+  catch(e){ ui.loadErr = (e && e.message) || '알 수 없는 오류'; render(); return; }
+  ui.loaded = true; render();
+}
+async function startAuth(){
+  render();
+  if (!configured()){ ui.auth = 'setup'; render(); return; }
+  if (!window.supabase){ ui.auth = 'nolib'; render(); return; }
+  sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY, {auth: {persistSession: true, autoRefreshToken: true}});
+  sb.auth.onAuthStateChange((ev, s) => { session = s; if (ev === 'SIGNED_OUT' && ui.auth === 'in') location.reload(); });
+  try { session = (await sb.auth.getSession()).data.session; } catch(e){ session = null; }
+  if (session) await openWorkspace(); else { ui.auth = 'login'; render(); }
+}
+
+startAuth();
+</script>
+</body>
+</html>
